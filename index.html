@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="color-scheme" content="light" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
 
   <title>서서랩 해루질 조회기</title>
 
@@ -14,14 +14,11 @@
       --text: #172033;
       --muted: #667085;
       --line: #e4e7ec;
-
       --brand: #1357d8;
       --brand-soft: #eef4ff;
-
       --good: #087a55;
       --warn: #b54708;
       --bad: #b42318;
-
       --shadow: 0 10px 30px rgba(16, 24, 40, 0.07);
       --radius: 18px;
     }
@@ -38,7 +35,6 @@
         BlinkMacSystemFont,
         "Segoe UI",
         sans-serif;
-
       background: var(--bg);
       color: var(--text);
       line-height: 1.55;
@@ -51,32 +47,16 @@
     }
 
     .hero {
-      background:
-        linear-gradient(
-          135deg,
-          #0f3f9f,
-          #1769e0
-        );
-
+      background: linear-gradient(135deg, #0f3f9f, #1769e0);
       color: #ffffff;
-
       padding: 28px;
-
       border-radius: 24px;
-
       box-shadow: var(--shadow);
     }
 
     .hero h1 {
       margin: 0 0 8px;
-
-      font-size:
-        clamp(
-          26px,
-          5vw,
-          38px
-        );
-
+      font-size: clamp(26px, 5vw, 38px);
       letter-spacing: -0.03em;
     }
 
@@ -88,11 +68,8 @@
     .panel,
     .card {
       background: var(--card);
-
       border: 1px solid var(--line);
-
       border-radius: var(--radius);
-
       box-shadow: var(--shadow);
     }
 
@@ -103,22 +80,14 @@
 
     .form-grid {
       display: grid;
-
-      grid-template-columns:
-        1.5fr
-        1fr
-        auto;
-
+      grid-template-columns: 1.5fr 1fr auto;
       gap: 12px;
-
       align-items: end;
     }
 
     label {
       display: block;
-
       margin-bottom: 7px;
-
       font-size: 13px;
       font-weight: 700;
     }
@@ -128,31 +97,20 @@
     button {
       width: 100%;
       min-height: 46px;
-
       border-radius: 12px;
-
       border: 1px solid #cfd4dc;
-
       background: #ffffff;
-
       padding: 0 13px;
-
       font-size: 15px;
-
       color: var(--text);
     }
 
     button {
       border: 0;
-
       background: var(--brand);
-
       color: #ffffff;
-
       font-weight: 800;
-
       cursor: pointer;
-
       padding: 0 20px;
     }
 
@@ -163,21 +121,15 @@
 
     .notice {
       margin-top: 12px;
-
       color: var(--muted);
-
       font-size: 13px;
     }
 
     .status {
       margin-top: 18px;
-
       padding: 14px 16px;
-
       border-radius: 14px;
-
       background: var(--brand-soft);
-
       color: #24405f;
     }
 
@@ -193,12 +145,8 @@
 
     .grid {
       display: grid;
-
-      grid-template-columns:
-        repeat(3, 1fr);
-
+      grid-template-columns: repeat(3, 1fr);
       gap: 14px;
-
       margin-top: 18px;
     }
 
@@ -208,50 +156,37 @@
 
     .card h2 {
       margin: 0 0 12px;
-
       font-size: 17px;
     }
 
     .big {
       font-size: 26px;
-
       font-weight: 900;
-
       letter-spacing: -0.03em;
     }
 
     .sub {
       margin-top: 4px;
-
       color: var(--muted);
-
       font-size: 13px;
     }
 
     .kpis {
       display: grid;
-
-      grid-template-columns:
-        repeat(2, 1fr);
-
+      grid-template-columns: repeat(2, 1fr);
       gap: 10px;
     }
 
     .kpi {
       padding: 12px;
-
       border-radius: 12px;
-
       background: #f8fafc;
-
       border: 1px solid #edf0f4;
     }
 
     .kpi b {
       display: block;
-
       margin-top: 2px;
-
       font-size: 18px;
     }
 
@@ -261,7 +196,6 @@
 
     .section .card {
       padding: 0;
-
       overflow: hidden;
     }
 
@@ -271,7 +205,6 @@
 
     .section-head h2 {
       margin: 0;
-
       font-size: 18px;
     }
 
@@ -281,29 +214,21 @@
 
     table {
       width: 100%;
-
       border-collapse: collapse;
-
       min-width: 720px;
     }
 
     th,
     td {
       padding: 12px 14px;
-
       text-align: center;
-
-      border-top:
-        1px solid var(--line);
-
+      border-top: 1px solid var(--line);
       white-space: nowrap;
     }
 
     th {
       background: #f8fafc;
-
       font-size: 13px;
-
       color: #475467;
     }
 
@@ -314,11 +239,8 @@
 
     .badge {
       display: inline-block;
-
       padding: 4px 8px;
-
       border-radius: 999px;
-
       font-size: 12px;
       font-weight: 800;
     }
@@ -333,16 +255,14 @@
       color: var(--warn);
     }
 
-    .badge.bad {
-      background: #fff1f0;
-      color: var(--bad);
+    .badge.neutral {
+      background: #f2f4f7;
+      color: #475467;
     }
 
     .foot {
       margin-top: 14px;
-
       color: var(--muted);
-
       font-size: 12px;
     }
 
@@ -351,7 +271,6 @@
     }
 
     @media (max-width: 760px) {
-
       .form-grid,
       .grid {
         grid-template-columns: 1fr;
@@ -362,35 +281,24 @@
       }
 
       .wrap {
-        width:
-          min(
-            calc(100% - 20px),
-            980px
-          );
-
+        width: min(calc(100% - 20px), 980px);
         padding-top: 14px;
       }
     }
   </style>
 </head>
 
-
 <body>
 
   <main class="wrap">
 
     <section class="hero">
-
-      <h1>
-        서서랩 해루질 조회기
-      </h1>
-
+      <h1>서서랩 해루질 조회기</h1>
       <p>
         국립해양조사원 조위와
         기상청 단기예보를
         한 화면에서 확인합니다.
       </p>
-
     </section>
 
 
@@ -399,110 +307,59 @@
       <div class="form-grid">
 
         <div>
-
-          <label for="station">
-            조위관측소
-          </label>
-
-          <select id="station">
-          </select>
-
+          <label for="station">조위관측소</label>
+          <select id="station"></select>
         </div>
 
-
         <div>
-
-          <label for="date">
-            조회일
-          </label>
-
-          <input
-            id="date"
-            type="date"
-          />
-
+          <label for="date">조회일</label>
+          <input id="date" type="date">
         </div>
 
-
         <div>
-
-          <button
-            id="searchBtn"
-            type="button"
-          >
+          <button id="searchBtn" type="button">
             조회하기
           </button>
-
         </div>
 
       </div>
 
-
       <div class="notice">
-
-        ※ 조위는 국립해양조사원
-        관측소 기준입니다.
-        실제 해루질 포인트와
-        거리가 있는 경우
-        현장 조위와 차이가
-        발생할 수 있습니다.
-
+        ※ 조위는 국립해양조사원 관측소 기준입니다.
+        실제 해루질 포인트와 거리가 있는 경우
+        현장 조위와 차이가 발생할 수 있습니다.
       </div>
 
     </section>
 
 
-    <div
-      id="status"
-      class="status"
-    >
-      관측소와 날짜를 선택한 뒤
-      조회하세요.
+    <div id="status" class="status">
+      관측소와 날짜를 선택한 뒤 조회하세요.
     </div>
 
 
-    <section
-      id="summary"
-      class="grid hidden"
-    >
+    <section id="summary" class="grid hidden">
 
       <article class="card">
+        <h2>관측소</h2>
 
-        <h2>
-          관측소
-        </h2>
-
-        <div
-          id="stationName"
-          class="big"
-        >
+        <div id="stationName" class="big">
           -
         </div>
 
-        <div
-          id="stationCoord"
-          class="sub"
-        >
+        <div id="stationCoord" class="sub">
           -
         </div>
-
       </article>
 
 
       <article class="card">
-
-        <h2>
-          예측 조위
-        </h2>
-
+        <h2>예측 조위</h2>
 
         <div class="kpis">
 
           <div class="kpi">
-
-            <span>
-              최저
-            </span>
+            <span>최저</span>
 
             <b id="lowTide">
               -
@@ -511,15 +368,11 @@
             <small id="lowTime">
               -
             </small>
-
           </div>
 
 
           <div class="kpi">
-
-            <span>
-              최고
-            </span>
+            <span>최고</span>
 
             <b id="highTide">
               -
@@ -528,95 +381,53 @@
             <small id="highTime">
               -
             </small>
-
           </div>
 
         </div>
 
-
         <div class="sub">
-
-          시간 간격 예측값 중
-          최저·최고값
-
+          시간 간격 예측값 중 최저·최고값
         </div>
-
       </article>
 
 
       <article class="card">
+        <h2>날씨 요약</h2>
 
-        <h2>
-          날씨 요약
-        </h2>
-
-        <div
-          id="weatherNow"
-          class="big"
-        >
+        <div id="weatherNow" class="big">
           -
         </div>
 
-        <div
-          id="weatherSub"
-          class="sub"
-        >
+        <div id="weatherSub" class="sub">
           -
         </div>
-
       </article>
 
     </section>
 
 
-
-    <section
-      id="tideSection"
-      class="section hidden"
-    >
+    <section id="tideSection" class="section hidden">
 
       <div class="card">
 
         <div class="section-head">
-
-          <h2>
-            조위 상세
-          </h2>
-
+          <h2>조위 상세</h2>
         </div>
-
 
         <div class="table-wrap">
 
           <table>
 
             <thead>
-
               <tr>
-
-                <th>
-                  시간
-                </th>
-
-                <th>
-                  실측 조위(cm)
-                </th>
-
-                <th>
-                  예측 조위(cm)
-                </th>
-
-                <th>
-                  상태
-                </th>
-
+                <th>시간</th>
+                <th>실측 조위(cm)</th>
+                <th>예측 조위(cm)</th>
+                <th>상태</th>
               </tr>
-
             </thead>
 
-
-            <tbody id="tideBody">
-            </tbody>
+            <tbody id="tideBody"></tbody>
 
           </table>
 
@@ -627,66 +438,31 @@
     </section>
 
 
-
-    <section
-      id="weatherSection"
-      class="section hidden"
-    >
+    <section id="weatherSection" class="section hidden">
 
       <div class="card">
 
         <div class="section-head">
-
-          <h2>
-            날씨 상세
-          </h2>
-
+          <h2>날씨 상세</h2>
         </div>
-
 
         <div class="table-wrap">
 
           <table>
 
             <thead>
-
               <tr>
-
-                <th>
-                  시간
-                </th>
-
-                <th>
-                  기온
-                </th>
-
-                <th>
-                  하늘
-                </th>
-
-                <th>
-                  강수확률
-                </th>
-
-                <th>
-                  강수
-                </th>
-
-                <th>
-                  풍속
-                </th>
-
-                <th>
-                  습도
-                </th>
-
+                <th>시간</th>
+                <th>기온</th>
+                <th>하늘</th>
+                <th>강수확률</th>
+                <th>강수</th>
+                <th>풍속</th>
+                <th>습도</th>
               </tr>
-
             </thead>
 
-
-            <tbody id="weatherBody">
-            </tbody>
+            <tbody id="weatherBody"></tbody>
 
           </table>
 
@@ -698,25 +474,17 @@
 
 
     <p class="foot">
-
       데이터 출처:
-      국립해양조사원
-      조위관측소 실측·예측 조위 /
+      국립해양조사원 조위관측소 실측·예측 조위 /
       기상청 단기예보.
-
-      안전 판단은
-      현장 상황과
-      공식 기상특보를
-      함께 확인하세요.
-
+      안전 판단은 현장 상황과
+      공식 기상특보를 함께 확인하세요.
     </p>
 
   </main>
 
 
-
   <script>
-
     (() => {
 
       "use strict";
@@ -725,66 +493,51 @@
       /*
        * Cloudflare Worker
        *
-       * API 인증키는
-       * 이 HTML에 들어가지 않습니다.
+       * 인증키는 이 HTML에 들어가지 않습니다.
        *
-       * Cloudflare Secret에 저장된
        * KHOA_API_KEY
        * KMA_API_KEY
-       * 를 Worker가 사용합니다.
+       *
+       * 두 키 모두 Cloudflare Secret에서 사용합니다.
        */
 
       const API_BASE =
         "https://haerujil-api.yangbbo0616.workers.dev";
 
 
-
       /*
-       * 국립해양조사원 공식
-       * 조위관측소 코드
-       *
+       * 국립해양조사원 공식 관측소 코드
        * 서해안 관련 관측소 중심
        */
 
       const STATIONS = [
-
         ["DT_0001", "인천"],
         ["DT_0002", "평택"],
         ["DT_0003", "영광"],
         ["DT_0007", "목포"],
         ["DT_0008", "안산"],
-
         ["DT_0017", "대산"],
         ["DT_0018", "군산"],
-
         ["DT_0024", "장항"],
         ["DT_0025", "보령"],
-
         ["DT_0032", "강화대교"],
         ["DT_0035", "흑산도"],
         ["DT_0037", "어청도"],
-
         ["DT_0043", "영흥도"],
         ["DT_0044", "영종대교"],
-
         ["DT_0050", "태안"],
         ["DT_0051", "서천마량"],
         ["DT_0052", "인천송도"],
-
         ["DT_0065", "덕적도"],
         ["DT_0066", "향화도"],
         ["DT_0067", "안흥"],
         ["DT_0068", "위도"],
-
         ["DT_0093", "소무의도"]
-
       ];
 
 
-
       const el =
-        (id) =>
-          document.getElementById(id);
+        (id) => document.getElementById(id);
 
 
       const stationEl =
@@ -800,82 +553,54 @@
         el("status");
 
 
-
       /*
-       * 관측소 선택 목록 생성
+       * 관측소 선택 목록
        */
 
-      STATIONS.forEach(
+      STATIONS.forEach(([code, name]) => {
 
-        ([code, name]) => {
+        const option =
+          document.createElement("option");
 
-          const option =
-            document.createElement("option");
+        option.value =
+          code;
 
-          option.value =
-            code;
+        option.textContent =
+          `${name} (${code})`;
 
-          option.textContent =
-            `${name} (${code})`;
+        stationEl.appendChild(option);
 
-          stationEl.appendChild(
-            option
-          );
-
-        }
-
-      );
-
+      });
 
 
       /*
-       * 오늘 날짜 기본 입력
-       * 대한민국 표준시 기준
+       * 오늘 날짜 기본 설정
        */
 
       dateEl.value =
-        kstDateString(
-          new Date()
-        );
-
+        kstDateString(new Date());
 
 
       /*
        * 대한민국 시간
        */
 
-      function kstParts(
-        date = new Date()
-      ) {
+      function kstParts(date = new Date()) {
 
         return new Intl.DateTimeFormat(
           "en-CA",
           {
-            timeZone:
-              "Asia/Seoul",
-
-            year:
-              "numeric",
-
-            month:
-              "2-digit",
-
-            day:
-              "2-digit",
-
-            hour:
-              "2-digit",
-
-            minute:
-              "2-digit",
-
-            hourCycle:
-              "h23"
+            timeZone: "Asia/Seoul",
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            hourCycle: "h23"
           }
         )
         .formatToParts(date)
         .reduce(
-
           (result, part) => {
 
             result[part.type] =
@@ -884,67 +609,44 @@
             return result;
 
           },
-
           {}
-
         );
 
       }
 
 
-
-      function kstDateString(
-        date = new Date()
-      ) {
+      function kstDateString(date = new Date()) {
 
         const p =
           kstParts(date);
 
         return (
-          `${p.year}` +
-          `-${p.month}` +
-          `-${p.day}`
+          `${p.year}-${p.month}-${p.day}`
         );
 
       }
 
 
+      function yyyymmdd(dateString) {
 
-      function yyyymmdd(
-        dateString
-      ) {
-
-        return dateString
-          .replaceAll(
-            "-",
-            ""
-          );
+        return dateString.replaceAll("-", "");
 
       }
-
 
 
       /*
        * 상태 메시지
        */
 
-      function setStatus(
-        message,
-        kind = ""
-      ) {
+      function setStatus(message, kind = "") {
 
         statusEl.textContent =
           message;
 
         statusEl.className =
-          `status${
-            kind
-              ? " " + kind
-              : ""
-          }`;
+          `status${kind ? " " + kind : ""}`;
 
       }
-
 
 
       /*
@@ -959,14 +661,11 @@
         const controller =
           new AbortController();
 
-
         const timer =
           setTimeout(
-            () =>
-              controller.abort(),
+            () => controller.abort(),
             timeoutMs
           );
-
 
         try {
 
@@ -974,47 +673,33 @@
             await fetch(
               url,
               {
-                signal:
-                  controller.signal,
-
-                cache:
-                  "no-store"
+                signal: controller.signal,
+                cache: "no-store"
               }
             );
 
-
           const text =
             await response.text();
-
 
           if (!response.ok) {
 
             throw new Error(
               `HTTP ${response.status}: ` +
-              text.slice(
-                0,
-                160
-              )
+              text.slice(0, 180)
             );
 
           }
 
-
           try {
 
-            return JSON.parse(
-              text
-            );
+            return JSON.parse(text);
 
           }
           catch {
 
             throw new Error(
-              "JSON 응답이 아닙니다: " +
-              text.slice(
-                0,
-                160
-              )
+              "API 응답이 JSON 형식이 아닙니다: " +
+              text.slice(0, 180)
             );
 
           }
@@ -1022,26 +707,114 @@
         }
         finally {
 
-          clearTimeout(
-            timer
-          );
+          clearTimeout(timer);
 
         }
 
       }
 
 
+      /*
+       * API 응답 구조 통합
+       *
+       * KMA:
+       * response.header / response.body
+       *
+       * KHOA 환경에 따라:
+       * response.header / response.body
+       * 또는
+       * header / body
+       *
+       * 둘 다 처리
+       */
+
+      function apiRoot(payload) {
+
+        return payload?.response ?? payload ?? {};
+
+      }
+
+
+      function apiHeader(payload) {
+
+        return apiRoot(payload)?.header ?? {};
+
+      }
+
+
+      function apiBody(payload) {
+
+        return apiRoot(payload)?.body ?? {};
+
+      }
+
+
+      function apiResultCode(payload) {
+
+        const value =
+          apiHeader(payload)?.resultCode;
+
+        if (
+          value === undefined ||
+          value === null
+        ) {
+
+          return "";
+
+        }
+
+        return String(value).trim();
+
+      }
+
+
+      function apiResultMessage(payload) {
+
+        return (
+          apiHeader(payload)?.resultMsg
+          ??
+          "알 수 없음"
+        );
+
+      }
+
+
+      function apiSuccess(payload) {
+
+        const code =
+          apiResultCode(payload);
+
+        return (
+          code === "00" ||
+          code === "0"
+        );
+
+      }
+
+
+      function normalizeItems(payload) {
+
+        const items =
+          apiBody(payload)
+            ?.items
+            ?.item;
+
+        if (!items) {
+
+          return [];
+
+        }
+
+        return Array.isArray(items)
+          ? items
+          : [items];
+
+      }
+
 
       /*
        * 기상청 단기예보
        * 최신 발표시각 계산
-       *
-       * 발표시각:
-       * 02, 05, 08, 11,
-       * 14, 17, 20, 23시
-       *
-       * 서버 갱신시간을 고려하여
-       * 20분 여유 적용
        */
 
       function getKmaBase() {
@@ -1049,18 +822,15 @@
         const KST_OFFSET =
           9 * 60 * 60 * 1000;
 
-
         const SAFE_DELAY =
           20 * 60 * 1000;
 
-
-        const kstNow =
+        const now =
           new Date(
             Date.now()
             + KST_OFFSET
             - SAFE_DELAY
           );
-
 
         const schedules =
           [
@@ -1074,93 +844,63 @@
             23
           ];
 
-
         const currentHour =
-          kstNow.getUTCHours();
-
+          now.getUTCHours();
 
         let baseHour =
           schedules
             .filter(
-              (hour) =>
+              hour =>
                 hour <= currentHour
             )
             .pop();
 
-
         let baseDate =
-          new Date(
-            kstNow.getTime()
-          );
+          new Date(now.getTime());
 
-
-        if (
-          baseHour === undefined
-        ) {
+        if (baseHour === undefined) {
 
           baseHour =
             23;
 
           baseDate.setUTCDate(
-            baseDate.getUTCDate()
-            - 1
+            baseDate.getUTCDate() - 1
           );
 
         }
 
-
         const year =
           baseDate.getUTCFullYear();
 
-
         const month =
           String(
-            baseDate.getUTCMonth()
-            + 1
+            baseDate.getUTCMonth() + 1
           )
-          .padStart(
-            2,
-            "0"
-          );
-
+          .padStart(2, "0");
 
         const day =
           String(
             baseDate.getUTCDate()
           )
-          .padStart(
-            2,
-            "0"
-          );
-
+          .padStart(2, "0");
 
         return {
-
           base_date:
             `${year}${month}${day}`,
 
           base_time:
             `${String(baseHour)
-              .padStart(
-                2,
-                "0"
-              )}00`
-
+              .padStart(2, "0")}00`
         };
 
       }
 
 
-
       /*
-       * 위경도 →
-       * 기상청 DFS 격자 변환
+       * 위경도 → 기상청 DFS 격자
        */
 
-      function dfsGrid(
-        lat,
-        lon
-      ) {
+      function dfsGrid(lat, lon) {
 
         const RE =
           6371.00877;
@@ -1189,209 +929,121 @@
         const DEGRAD =
           Math.PI / 180.0;
 
-
         const re =
           RE / GRID;
-
 
         const slat1 =
           SLAT1 * DEGRAD;
 
-
         const slat2 =
           SLAT2 * DEGRAD;
-
 
         const olon =
           OLON * DEGRAD;
 
-
         const olat =
           OLAT * DEGRAD;
 
-
         let sn =
           Math.tan(
-            Math.PI * 0.25
-            + slat2 * 0.5
+            Math.PI * 0.25 +
+            slat2 * 0.5
           )
           /
           Math.tan(
-            Math.PI * 0.25
-            + slat1 * 0.5
+            Math.PI * 0.25 +
+            slat1 * 0.5
           );
-
 
         sn =
           Math.log(
-            Math.cos(slat1)
-            /
+            Math.cos(slat1) /
             Math.cos(slat2)
           )
           /
           Math.log(sn);
 
-
         let sf =
           Math.tan(
-            Math.PI * 0.25
-            + slat1 * 0.5
+            Math.PI * 0.25 +
+            slat1 * 0.5
           );
 
-
         sf =
-          Math.pow(
-            sf,
-            sn
-          )
+          Math.pow(sf, sn)
           *
-          Math.cos(
-            slat1
-          )
+          Math.cos(slat1)
           /
           sn;
 
-
         let ro =
           Math.tan(
-            Math.PI * 0.25
-            + olat * 0.5
+            Math.PI * 0.25 +
+            olat * 0.5
           );
-
 
         ro =
           re
           *
           sf
           /
-          Math.pow(
-            ro,
-            sn
-          );
-
+          Math.pow(ro, sn);
 
         let ra =
           Math.tan(
-            Math.PI * 0.25
-            + lat
-              * DEGRAD
-              * 0.5
+            Math.PI * 0.25 +
+            lat * DEGRAD * 0.5
           );
-
 
         ra =
           re
           *
           sf
           /
-          Math.pow(
-            ra,
-            sn
-          );
-
+          Math.pow(ra, sn);
 
         let theta =
-          lon
-          *
-          DEGRAD
-          -
-          olon;
+          lon * DEGRAD - olon;
 
-
-        if (
-          theta > Math.PI
-        ) {
+        if (theta > Math.PI) {
 
           theta -=
             2 * Math.PI;
 
         }
 
-
-        if (
-          theta < -Math.PI
-        ) {
+        if (theta < -Math.PI) {
 
           theta +=
             2 * Math.PI;
 
         }
 
-
         theta *=
           sn;
 
-
         return {
-
           nx:
             Math.floor(
-              ra
-              *
-              Math.sin(theta)
-              +
-              XO
-              +
-              0.5
+              ra * Math.sin(theta)
+              + XO
+              + 0.5
             ),
 
           ny:
             Math.floor(
               ro
-              -
-              ra
-              *
-              Math.cos(theta)
-              +
-              YO
-              +
-              0.5
+              - ra * Math.cos(theta)
+              + YO
+              + 0.5
             )
-
         };
 
       }
 
 
-
       /*
-       * API 응답 목록 정규화
-       */
-
-      function normalizeItems(
-        payload
-      ) {
-
-        const items =
-          payload
-            ?.response
-            ?.body
-            ?.items
-            ?.item;
-
-
-        if (!items) {
-
-          return [];
-
-        }
-
-
-        return Array.isArray(
-          items
-        )
-          ? items
-          : [items];
-
-      }
-
-
-
-      /*
-       * 조위 상태 표시
-       *
-       * 선택한 날짜의
-       * 예측 조위 범위 기준
+       * 조위 상태
        */
 
       function tideClass(
@@ -1401,12 +1053,9 @@
       ) {
 
         if (
-          !Number.isFinite(value)
-          ||
-          !Number.isFinite(min)
-          ||
-          !Number.isFinite(max)
-          ||
+          !Number.isFinite(value) ||
+          !Number.isFinite(min) ||
+          !Number.isFinite(max) ||
           max === min
         ) {
 
@@ -1414,139 +1063,86 @@
 
         }
 
-
         const ratio =
-          (value - min)
-          /
+          (value - min) /
           (max - min);
 
-
-        if (
-          ratio <= 0.25
-        ) {
+        if (ratio <= 0.25) {
 
           return (
             '<span class="badge good">' +
-            "낮은 조위" +
-            "</span>"
+            '낮은 조위' +
+            '</span>'
           );
 
         }
 
-
-        if (
-          ratio >= 0.75
-        ) {
+        if (ratio >= 0.75) {
 
           return (
             '<span class="badge warn">' +
-            "높은 조위" +
-            "</span>"
+            '높은 조위' +
+            '</span>'
           );
 
         }
 
-
         return (
-          '<span class="badge">' +
-          "중간" +
-          "</span>"
+          '<span class="badge neutral">' +
+          '중간' +
+          '</span>'
         );
 
       }
 
 
-
       /*
-       * 기상청 코드 →
-       * 한글 상태
+       * 기상청 코드 → 한글
        */
 
-      function skyText(
-        sky,
-        pty
-      ) {
+      function skyText(sky, pty) {
 
         const precipitation =
           Number(pty);
 
-
-        if (
-          precipitation === 1
-        ) {
-
+        if (precipitation === 1) {
           return "비";
-
         }
 
-
-        if (
-          precipitation === 2
-        ) {
-
+        if (precipitation === 2) {
           return "비/눈";
-
         }
 
-
-        if (
-          precipitation === 3
-        ) {
-
+        if (precipitation === 3) {
           return "눈";
-
         }
 
-
-        if (
-          precipitation === 4
-        ) {
-
+        if (precipitation === 4) {
           return "소나기";
-
         }
-
 
         const skyCode =
           Number(sky);
 
-
-        if (
-          skyCode === 1
-        ) {
-
+        if (skyCode === 1) {
           return "맑음";
-
         }
 
-
-        if (
-          skyCode === 3
-        ) {
-
+        if (skyCode === 3) {
           return "구름많음";
-
         }
 
-
-        if (
-          skyCode === 4
-        ) {
-
+        if (skyCode === 4) {
           return "흐림";
-
         }
-
 
         return "-";
 
       }
 
 
-
       /*
-       * 기상청 항목을
-       * 시간별 데이터로 변환
+       * 시간별 날씨 묶기
        */
 
       function groupWeather(
@@ -1557,251 +1153,178 @@
         const map =
           new Map();
 
-
-        for (
-          const item
-          of items
-        ) {
+        for (const item of items) {
 
           if (
-            item.fcstDate
-            !== targetDate
+            item.fcstDate !== targetDate
           ) {
 
             continue;
 
           }
 
-
           const time =
             item.fcstTime;
 
+          if (!map.has(time)) {
 
-          if (
-            !map.has(time)
-          ) {
-
-            map.set(
-              time,
-              {}
-            );
+            map.set(time, {});
 
           }
 
-
-          map.get(time)[
-            item.category
-          ] =
+          map.get(time)[item.category] =
             item.fcstValue;
 
         }
 
-
-        return (
-          [...map.entries()]
+        return [...map.entries()]
           .sort(
             (a, b) =>
-              a[0]
-                .localeCompare(
-                  b[0]
-                )
-          )
-        );
+              a[0].localeCompare(b[0])
+          );
 
       }
 
 
-
       /*
-       * 조위 화면 출력
+       * HTML 문자열 안전 처리
        */
 
-      function renderTide(
-        items
-      ) {
+      function escapeHtml(value) {
+
+        return String(value ?? "")
+          .replace(
+            /[&<>'"]/g,
+            character => (
+              {
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                "'": "&#39;",
+                "\"": "&quot;"
+              }[character]
+            )
+          );
+
+      }
+
+
+      /*
+       * 조위 출력
+       */
+
+      function renderTide(items) {
 
         const values =
           items
             .map(
-              (item) =>
-                Number(
-                  item.tdlvHgt
-                )
+              item =>
+                Number(item.tdlvHgt)
             )
-            .filter(
-              Number.isFinite
-            );
-
+            .filter(Number.isFinite);
 
         const min =
           values.length
-            ? Math.min(
-                ...values
-              )
+            ? Math.min(...values)
             : NaN;
-
 
         const max =
           values.length
-            ? Math.max(
-                ...values
-              )
+            ? Math.max(...values)
             : NaN;
-
 
         const minItem =
           items.find(
-            (item) =>
-              Number(
-                item.tdlvHgt
-              )
-              === min
+            item =>
+              Number(item.tdlvHgt) === min
           );
-
 
         const maxItem =
           items.find(
-            (item) =>
-              Number(
-                item.tdlvHgt
-              )
-              === max
+            item =>
+              Number(item.tdlvHgt) === max
           );
 
-
-        el(
-          "lowTide"
-        ).textContent =
+        el("lowTide").textContent =
           Number.isFinite(min)
             ? `${Math.round(min)} cm`
             : "-";
 
-
-        el(
-          "highTide"
-        ).textContent =
+        el("highTide").textContent =
           Number.isFinite(max)
             ? `${Math.round(max)} cm`
             : "-";
 
+        el("lowTime").textContent =
+          minItem?.obsrvnDt?.slice(11, 16)
+          ?? "-";
 
-        el(
-          "lowTime"
-        ).textContent =
-          minItem
-            ?.obsrvnDt
-            ?.slice(
-              11,
-              16
-            )
-          ||
-          "-";
+        el("highTime").textContent =
+          maxItem?.obsrvnDt?.slice(11, 16)
+          ?? "-";
 
 
-        el(
-          "highTime"
-        ).textContent =
-          maxItem
-            ?.obsrvnDt
-            ?.slice(
-              11,
-              16
-            )
-          ||
-          "-";
-
-
-        el(
-          "tideBody"
-        ).innerHTML =
+        el("tideBody").innerHTML =
           items
-          .map(
-
-            (item) => {
+            .map(item => {
 
               const prediction =
-                Number(
-                  item.tdlvHgt
-                );
+                Number(item.tdlvHgt);
 
+              const actualNumber =
+                Number(item.bscTdlvHgt);
 
               const actual =
-                item.bscTdlvHgt
-                == null
+                Number.isFinite(actualNumber)
+                  ? Math.round(actualNumber)
+                  : "-";
 
-                ? "-"
-
-                : Math.round(
-                    Number(
-                      item.bscTdlvHgt
-                    )
-                  );
-
+              const predicted =
+                Number.isFinite(prediction)
+                  ? Math.round(prediction)
+                  : "-";
 
               const time =
-                item.obsrvnDt
-                  ?.slice(
-                    11,
-                    16
-                  )
-                ||
-                "-";
-
+                item.obsrvnDt?.slice(11, 16)
+                ?? "-";
 
               return (
+                "<tr>" +
 
-                "<tr>"
+                "<td>" +
+                escapeHtml(time) +
+                "</td>" +
 
-                + "<td>"
-                + escapeHtml(
-                    time
-                  )
-                + "</td>"
+                "<td>" +
+                actual +
+                "</td>" +
 
-                + "<td>"
-                + actual
-                + "</td>"
+                "<td>" +
+                predicted +
+                "</td>" +
 
-                + "<td>"
-                + (
-                    Number.isFinite(
-                      prediction
-                    )
-                      ? Math.round(
-                          prediction
-                        )
-                      : "-"
-                  )
-                + "</td>"
+                "<td>" +
+                tideClass(
+                  prediction,
+                  min,
+                  max
+                ) +
+                "</td>" +
 
-                + "<td>"
-                + tideClass(
-                    prediction,
-                    min,
-                    max
-                  )
-                + "</td>"
-
-                + "</tr>"
-
+                "</tr>"
               );
 
-            }
-
-          )
-          .join("");
+            })
+            .join("");
 
       }
 
 
-
       /*
-       * 날씨 화면 출력
+       * 날씨 출력
        */
 
-      function renderWeather(
-        groups
-      ) {
+      function renderWeather(groups) {
 
         const preferredTimes =
           [
@@ -1815,18 +1338,11 @@
             "2100"
           ];
 
-
         const rows =
           groups.filter(
-
             ([time]) =>
-              preferredTimes
-                .includes(
-                  time
-                )
-
+              preferredTimes.includes(time)
           );
-
 
         const source =
           rows.length
@@ -1834,148 +1350,109 @@
             : groups;
 
 
-        el(
-          "weatherBody"
-        ).innerHTML =
+        el("weatherBody").innerHTML =
           source
-          .map(
+            .map(([time, weather]) => {
 
-            ([time, weather]) => {
+              const temperature =
+                weather.TMP != null
+                  ? `${weather.TMP}℃`
+                  : "-";
+
+              const pop =
+                weather.POP != null
+                  ? `${weather.POP}%`
+                  : "-";
+
+              const wind =
+                weather.WSD != null
+                  ? `${weather.WSD} m/s`
+                  : "-";
+
+              const humidity =
+                weather.REH != null
+                  ? `${weather.REH}%`
+                  : "-";
 
               return (
+                "<tr>" +
 
-                "<tr>"
+                "<td>" +
+                time.slice(0, 2) +
+                ":" +
+                time.slice(2) +
+                "</td>" +
 
-                + "<td>"
-                + time.slice(
-                    0,
-                    2
-                  )
-                + ":"
-                + time.slice(
-                    2
-                  )
-                + "</td>"
+                "<td>" +
+                temperature +
+                "</td>" +
 
-                + "<td>"
-                + (
-                    weather.TMP
-                    ?? "-"
-                  )
-                + "℃"
-                + "</td>"
+                "<td>" +
+                skyText(
+                  weather.SKY,
+                  weather.PTY
+                ) +
+                "</td>" +
 
-                + "<td>"
-                + skyText(
-                    weather.SKY,
-                    weather.PTY
-                  )
-                + "</td>"
+                "<td>" +
+                pop +
+                "</td>" +
 
-                + "<td>"
-                + (
-                    weather.POP
-                    ?? "-"
-                  )
-                + "%"
-                + "</td>"
+                "<td>" +
+                escapeHtml(
+                  weather.PCP ?? "-"
+                ) +
+                "</td>" +
 
-                + "<td>"
-                + escapeHtml(
-                    weather.PCP
-                    ?? "-"
-                  )
-                + "</td>"
+                "<td>" +
+                wind +
+                "</td>" +
 
-                + "<td>"
-                + (
-                    weather.WSD
-                    ?? "-"
-                  )
-                + " m/s"
-                + "</td>"
+                "<td>" +
+                humidity +
+                "</td>" +
 
-                + "<td>"
-                + (
-                    weather.REH
-                    ?? "-"
-                  )
-                + "%"
-                + "</td>"
-
-                + "</tr>"
-
+                "</tr>"
               );
 
-            }
-
-          )
-          .join("");
+            })
+            .join("");
 
 
-        if (
-          groups.length
-        ) {
+        if (groups.length) {
 
           const first =
             groups[0][1];
 
+          const temperature =
+            first.TMP != null
+              ? `${first.TMP}℃`
+              : "-";
 
-          el(
-            "weatherNow"
-          ).textContent =
-            (
-              first.TMP
-              ?? "-"
-            )
-            +
-            "℃ · "
-            +
+          el("weatherNow").textContent =
+            temperature +
+            " · " +
             skyText(
               first.SKY,
               first.PTY
             );
 
-
-          el(
-            "weatherSub"
-          ).textContent =
-
-            "강수확률 "
-            +
-            (
-              first.POP
-              ?? "-"
-            )
-            +
-            "% · 풍속 "
-            +
-            (
-              first.WSD
-              ?? "-"
-            )
-            +
-            " m/s · 습도 "
-            +
-            (
-              first.REH
-              ?? "-"
-            )
-            +
+          el("weatherSub").textContent =
+            "강수확률 " +
+            (first.POP ?? "-") +
+            "% · 풍속 " +
+            (first.WSD ?? "-") +
+            " m/s · 습도 " +
+            (first.REH ?? "-") +
             "%";
 
         }
         else {
 
-          el(
-            "weatherNow"
-          ).textContent =
+          el("weatherNow").textContent =
             "예보 없음";
 
-
-          el(
-            "weatherSub"
-          ).textContent =
+          el("weatherSub").textContent =
             "선택한 날짜가 단기예보 제공 범위를 벗어났을 수 있습니다.";
 
         }
@@ -1983,51 +1460,8 @@
       }
 
 
-
       /*
-       * HTML 문자열 안전 처리
-       */
-
-      function escapeHtml(
-        value
-      ) {
-
-        return String(
-          value ?? ""
-        )
-        .replace(
-
-          /[&<>'"]/g,
-
-          (character) => (
-
-            {
-              "&":
-                "&amp;",
-
-              "<":
-                "&lt;",
-
-              ">":
-                "&gt;",
-
-              "'":
-                "&#39;",
-
-              "\"":
-                "&quot;"
-            }[character]
-
-          )
-
-        );
-
-      }
-
-
-
-      /*
-       * 조회 실행
+       * 조회
        */
 
       async function search() {
@@ -2035,16 +1469,10 @@
         const obsCode =
           stationEl.value;
 
-
         const date =
           dateEl.value;
 
-
-        if (
-          !obsCode
-          ||
-          !date
-        ) {
+        if (!obsCode || !date) {
 
           setStatus(
             "관측소와 조회일을 선택하세요.",
@@ -2059,33 +1487,17 @@
         searchBtn.disabled =
           true;
 
+        el("summary")
+          .classList
+          .add("hidden");
 
-        el(
-          "summary"
-        )
-        .classList
-        .add(
-          "hidden"
-        );
+        el("tideSection")
+          .classList
+          .add("hidden");
 
-
-        el(
-          "tideSection"
-        )
-        .classList
-        .add(
-          "hidden"
-        );
-
-
-        el(
-          "weatherSection"
-        )
-        .classList
-        .add(
-          "hidden"
-        );
-
+        el("weatherSection")
+          .classList
+          .add("hidden");
 
         setStatus(
           "조위와 날씨 데이터를 불러오는 중입니다..."
@@ -2095,84 +1507,58 @@
         try {
 
           const reqDate =
-            yyyymmdd(
-              date
-            );
+            yyyymmdd(date);
 
 
           /*
-           * KHOA
+           * 1. KHOA 조위
            */
 
           const tideUrl =
-
             `${API_BASE}/khoa`
-
-            + "?type=json"
-
-            + "&obsCode="
-            + encodeURIComponent(
-                obsCode
-              )
-
-            + "&reqDate="
-            + reqDate
-
-            + "&min=60"
-
-            + "&pageNo=1"
-
-            + "&numOfRows=300";
+            +
+            "?type=json"
+            +
+            "&obsCode="
+            +
+            encodeURIComponent(obsCode)
+            +
+            "&reqDate="
+            +
+            encodeURIComponent(reqDate)
+            +
+            "&min=60"
+            +
+            "&pageNo=1"
+            +
+            "&numOfRows=300";
 
 
           const tidePayload =
-            await fetchJson(
-              tideUrl
-            );
+            await fetchJson(tideUrl);
 
 
-          const tideCode =
-            tidePayload
-              ?.response
-              ?.header
-              ?.resultCode;
-
-
-          if (
-            tideCode !== "00"
-          ) {
+          if (!apiSuccess(tidePayload)) {
 
             throw new Error(
-
-              "조위 API 오류: "
+              "조위 API 오류: " +
+              apiResultMessage(tidePayload)
               +
               (
-                tidePayload
-                  ?.response
-                  ?.header
-                  ?.resultMsg
-
-                ||
-                tideCode
-
-                ||
-                "알 수 없음"
+                apiResultCode(tidePayload)
+                  ? ` (${apiResultCode(tidePayload)})`
+                  : ""
               )
-
             );
 
           }
 
 
           const tideItems =
-            normalizeItems(
-              tidePayload
-            );
+            normalizeItems(tidePayload);
 
 
-          if (
-            !tideItems.length
-          ) {
+          if (!tideItems.length) {
 
             throw new Error(
               "선택한 날짜의 조위 데이터가 없습니다."
@@ -2181,60 +1567,35 @@
           }
 
 
-
           /*
-           * KHOA가 제공하는
-           * 관측소 위경도 확보
+           * KHOA 관측소 좌표
            */
 
           const station =
-
             tideItems.find(
-
-              (item) =>
-
+              item =>
                 Number.isFinite(
-                  Number(
-                    item.lat
-                  )
+                  Number(item.lat)
                 )
-
                 &&
-
                 Number.isFinite(
-                  Number(
-                    item.lot
-                  )
+                  Number(item.lot)
                 )
-
             )
-
-            ||
-
+            ??
             tideItems[0];
 
 
-
           const lat =
-            Number(
-              station.lat
-            );
-
+            Number(station.lat);
 
           const lon =
-            Number(
-              station.lot
-            );
+            Number(station.lot);
 
 
           if (
-            !Number.isFinite(
-              lat
-            )
-            ||
-            !Number.isFinite(
-              lon
-            )
+            !Number.isFinite(lat) ||
+            !Number.isFinite(lon)
           ) {
 
             throw new Error(
@@ -2244,56 +1605,33 @@
           }
 
 
-
-          el(
-            "stationName"
-          ).textContent =
-
+          el("stationName").textContent =
             station.obsvtrNm
-
-            ||
-
+            ??
             stationEl.options[
               stationEl.selectedIndex
-            ]
-            .textContent;
+            ]?.textContent
+            ??
+            obsCode;
 
 
-
-          el(
-            "stationCoord"
-          ).textContent =
-
-            `${lat.toFixed(5)}, `
-            +
-            `${lon.toFixed(5)}`;
+          el("stationCoord").textContent =
+            `${lat.toFixed(5)}, ${lon.toFixed(5)}`;
 
 
-
-          renderTide(
-            tideItems
-          );
-
+          renderTide(tideItems);
 
 
           /*
-           * KHOA 위경도 →
-           * KMA 격자
+           * KHOA 좌표 → KMA 격자
            */
 
-          const {
-            nx,
-            ny
-          } =
-            dfsGrid(
-              lat,
-              lon
-            );
-
+          const { nx, ny } =
+            dfsGrid(lat, lon);
 
 
           /*
-           * KMA
+           * 2. KMA 날씨
            */
 
           const base =
@@ -2301,69 +1639,47 @@
 
 
           const kmaUrl =
-
             `${API_BASE}/kma`
-
-            + "?base_date="
-            + base.base_date
-
-            + "&base_time="
-            + base.base_time
-
-            + "&nx="
-            + nx
-
-            + "&ny="
-            + ny;
-
+            +
+            "?base_date="
+            +
+            encodeURIComponent(base.base_date)
+            +
+            "&base_time="
+            +
+            encodeURIComponent(base.base_time)
+            +
+            "&nx="
+            +
+            encodeURIComponent(nx)
+            +
+            "&ny="
+            +
+            encodeURIComponent(ny);
 
 
           const kmaPayload =
-            await fetchJson(
-              kmaUrl
-            );
+            await fetchJson(kmaUrl);
 
 
-
-          const kmaCode =
-            kmaPayload
-              ?.response
-              ?.header
-              ?.resultCode;
-
-
-
-          if (
-            kmaCode !== "00"
-          ) {
+          if (!apiSuccess(kmaPayload)) {
 
             throw new Error(
-
-              "기상청 API 오류: "
+              "기상청 API 오류: " +
+              apiResultMessage(kmaPayload)
               +
               (
-                kmaPayload
-                  ?.response
-                  ?.header
-                  ?.resultMsg
-
-                ||
-                kmaCode
-
-                ||
-                "알 수 없음"
+                apiResultCode(kmaPayload)
+                  ? ` (${apiResultCode(kmaPayload)})`
+                  : ""
               )
-
             );
 
           }
 
 
-
           const weatherItems =
-            normalizeItems(
-              kmaPayload
-            );
+            normalizeItems(kmaPayload);
 
 
           const weatherGroups =
@@ -2373,43 +1689,27 @@
             );
 
 
-          renderWeather(
-            weatherGroups
-          );
+          renderWeather(weatherGroups);
 
 
+          /*
+           * 화면 표시
+           */
 
-          el(
-            "summary"
-          )
-          .classList
-          .remove(
-            "hidden"
-          );
+          el("summary")
+            .classList
+            .remove("hidden");
 
+          el("tideSection")
+            .classList
+            .remove("hidden");
 
-          el(
-            "tideSection"
-          )
-          .classList
-          .remove(
-            "hidden"
-          );
+          el("weatherSection")
+            .classList
+            .remove("hidden");
 
 
-          el(
-            "weatherSection"
-          )
-          .classList
-          .remove(
-            "hidden"
-          );
-
-
-
-          if (
-            weatherGroups.length
-          ) {
+          if (weatherGroups.length) {
 
             setStatus(
               "조위와 날씨 조회가 완료되었습니다.",
@@ -2420,25 +1720,18 @@
           else {
 
             setStatus(
-              "조위는 조회됐지만 선택한 날짜의 단기예보는 없습니다."
+              "조위는 정상 조회됐지만 선택한 날짜의 단기예보는 없습니다."
             );
 
           }
 
         }
-        catch (
-          error
-        ) {
+        catch (error) {
 
-          console.error(
-            error
-          );
-
+          console.error(error);
 
           if (
-            error.name
-            ===
-            "AbortError"
+            error?.name === "AbortError"
           ) {
 
             setStatus(
@@ -2450,7 +1743,9 @@
           else {
 
             setStatus(
-              error.message,
+              error?.message
+              ??
+              "데이터 조회 중 오류가 발생했습니다.",
               "error"
             );
 
@@ -2467,17 +1762,13 @@
       }
 
 
-
-      searchBtn
-        .addEventListener(
-          "click",
-          search
-        );
+      searchBtn.addEventListener(
+        "click",
+        search
+      );
 
     })();
-
   </script>
 
 </body>
-
 </html>
