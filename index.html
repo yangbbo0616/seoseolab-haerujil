@@ -30,10 +30,10 @@ tr.best{background:#eef8ff;box-shadow:inset 4px 0 #168bc3}tr.cautionrow{backgrou
 <div class="title">지역·포인트 선택</div>
 <div class="selectors">
 <select id="region">
-<option value="gg">인천·경기 서해안</option>
-<option value="cn">충남 서해안</option>
-<option value="jb">전북 서해안</option>
-<option value="jn">전남 서해안</option>
+<option value="gg">인천·경기</option>
+<option value="cn">충남</option>
+<option value="jb">전북</option>
+<option value="jn">전남</option>
 </select>
 <select id="point"></select>
 <button class="action" id="lookupBtn" type="button">조회하기</button>
@@ -2267,6 +2267,17 @@ render(thisWeek);
     } finally { clearTimeout(timer); }
   }
 
+  async function fetchText(url, timeout=15000){
+    const controller=new AbortController();
+    const timer=setTimeout(()=>controller.abort(), timeout);
+    try{
+      const response=await fetch(url,{signal:controller.signal,cache:"no-store"});
+      const text=await response.text();
+      if(!response.ok) throw new Error(`HTTP ${response.status}`);
+      return text;
+    } finally { clearTimeout(timer); }
+  }
+
   function latestKmaBase(){
     const schedules=[2,5,8,11,14,17,20,23];
     /* KST 기준, 발표 후 안정화 시간을 고려해 20분 이전 시각 사용 */
@@ -2320,6 +2331,7 @@ render(thisWeek);
     const entries=Array.from(times.entries()).sort((a,b)=>a[0].localeCompare(b[0]));
     const temps=entries.map(([,v])=>Number(v.TMP)).filter(Number.isFinite);
     const winds=entries.map(([,v])=>Number(v.WSD)).filter(Number.isFinite);
+    const waves=entries.map(([,v])=>Number(v.WAV)).filter(Number.isFinite);
     const target=entries.find(([t])=>t==="1200") || entries.find(([t])=>t==="1500") || entries[Math.floor(entries.length/2)];
     const w=target?.[1] || {};
     return {
@@ -2327,7 +2339,9 @@ render(thisWeek);
       text:weatherText(w.SKY,w.PTY),
       tmin:temps.length?Math.min(...temps):null,
       tmax:temps.length?Math.max(...temps):null,
-      wind:winds.length?Math.max(...winds):null
+      wind:winds.length?Math.max(...winds):null,
+      waveMin:waves.length?Math.min(...waves):null,
+      waveMax:waves.length?Math.max(...waves):null
     };
   }
 
@@ -2356,6 +2370,28 @@ render(thisWeek);
     return groupWeather(apiItems(payload));
   }
 
+  async function loadWarning(meta){
+    try{
+      const raw=await fetchText(`${API_BASE}/warning?fe=f&disp=0&help=0`);
+      const land=meta?.warning_scope_candidate?.land_admin;
+      const marine=meta?.warning_scope_candidate?.marine_scope || "";
+      const tokens=[
+        land?.sigungu,
+        marine,
+        marine.replace("앞바다",""),
+      ].filter(Boolean);
+
+      const hit=tokens.some(token=>raw.includes(token));
+      return {
+        status: hit ? "특보 확인" : "확인필요",
+        matched: hit,
+      };
+    }catch(err){
+      console.warn("특보 조회",err);
+      return {status:"확인필요",matched:false};
+    }
+  }
+
   async function loadTide(meta,date){
     let obsCode=meta?.tide_station_candidate?.obsCode;
     if(!obsCode) throw new Error("조위관측소 매핑 확인 필요");
@@ -2367,7 +2403,7 @@ render(thisWeek);
     return {low:extractLowTide(apiItems(payload)),obsCode,station:meta?.tide_station_candidate?.name || obsCode};
   }
 
-  function blankDay(date){ return {date,weather:null,low:null,tideStation:null}; }
+  function blankDay(date){ return {date,weather:null,low:null,tideStation:null,warning:"확인필요"}; }
 
   function renderRows(days){
     tbody.innerHTML="";
@@ -2380,8 +2416,11 @@ render(thisWeek);
       const temp=w&&w.tmin!=null&&w.tmax!=null?`${Math.round(w.tmin)}~${Math.round(w.tmax)}℃`:"확인필요";
       const low=day.low?`${day.low.time} (${Math.round(day.low.height)}cm)`:"확인필요";
       const wind=w?.wind!=null?`${w.wind.toFixed(1)}m/s`:"확인필요";
+      const wave=w?.waveMin!=null&&w?.waveMax!=null
+        ? (Math.abs(w.waveMin-w.waveMax)<0.01 ? `${w.waveMax.toFixed(1)}m` : `${w.waveMin.toFixed(1)}~${w.waveMax.toFixed(1)}m`)
+        : "확인필요";
       const weather=w?`${w.icon} ${w.text}`:"확인필요";
-      tr.innerHTML=`<td><button class="datebtn" type="button">${label(day.date)}</button></td><td style="font-size:15px">${weather}</td><td>${temp}</td><td>${low}</td><td><b>확인필요</b></td><td>확인필요</td><td><b>확인필요</b></td><td>${wind}</td><td>확인필요</td><td>확인필요</td><td>확인필요</td><td><span class="status normal">확인필요</span></td>`;
+      tr.innerHTML=`<td><button class="datebtn" type="button">${label(day.date)}</button></td><td style="font-size:15px">${weather}</td><td>${temp}</td><td>${low}</td><td><b>확인필요</b></td><td>확인필요</td><td><b>확인필요</b></td><td>${wind}</td><td>${wave}</td><td>확인필요</td><td>${day.warning}</td><td><span class="status normal">확인필요</span></td>`;
       tr.querySelector(".datebtn").addEventListener("click",()=>showDetail(day));
       tbody.appendChild(tr);
     }
@@ -2393,6 +2432,9 @@ render(thisWeek);
     const w=day.weather;
     const temp=w&&w.tmin!=null&&w.tmax!=null?`${Math.round(w.tmin)}~${Math.round(w.tmax)}℃`:"확인필요";
     const low=day.low?`${day.low.time} / ${Math.round(day.low.height)}cm`:"확인필요";
+    const wave=w?.waveMin!=null&&w?.waveMax!=null
+      ? (Math.abs(w.waveMin-w.waveMax)<0.01 ? `${w.waveMax.toFixed(1)}m` : `${w.waveMin.toFixed(1)}~${w.waveMax.toFixed(1)}m`)
+      : "확인필요";
     detail.innerHTML=`<h3>${label(day.date)} 상세</h3>
       <div class="timecards">
         <div class="timecard exit"><small>🛟 철수 권고시간</small><strong>확인필요</strong><div class="source">기존 확정 안전판정 기준과 추가 공식 안전정보 연결 전에는 임의 시간을 계산하지 않습니다.</div></div>
@@ -2403,9 +2445,9 @@ render(thisWeek);
         <div class="metric"><span>날씨·기온</span><b>${w?`${w.icon} ${w.text} ${temp}`:"확인필요"}</b></div>
         <div class="metric"><span>물때</span><b>확인필요</b></div>
         <div class="metric"><span>풍속</span><b>${w?.wind!=null?`${w.wind.toFixed(1)}m/s`:"확인필요"}</b></div>
-        <div class="metric"><span>파고</span><b>확인필요</b></div>
+        <div class="metric"><span>파고</span><b>${wave}</b></div>
       </div>
-      <div class="warning"><b>상세 해석</b><br>현재 연결 완료된 공식 데이터만 표시합니다. 파고·시정·특보·물때·철수 권고·해루질 참고·종합판정은 기존 확정 기준을 임의 변경하지 않고 ‘확인필요’로 유지합니다.</div>`;
+      <div class="warning"><b>상세 해석</b><br>현재 연결 완료된 공식 데이터만 표시합니다. 시정·물때·철수 권고·해루질 참고·종합판정은 기존 확정 기준을 임의 변경하지 않고 ‘확인필요’로 유지합니다. 특보는 기상청 현재 특보현황에서 선택 포인트 관련 문구가 확인될 때 표시합니다.</div>`;
     detail.classList.add("open");
     detail.scrollIntoView({behavior:"smooth",block:"nearest"});
   }
@@ -2422,7 +2464,7 @@ render(thisWeek);
     const weatherCount=days.filter(d=>d.weather).length;
     if(quick[0]) quick[0].textContent="종합판정 연결 전";
     if(quick[1]) quick[1].textContent=`조위 ${tideCount}일 · 날씨 ${weatherCount}일 확인`;
-    if(quick[2]) quick[2].textContent="특보·파고 확인 필요";
+    if(quick[2]) quick[2].textContent=days.some(d=>d.warning==="특보 확인")?"공식 특보 확인 필요":"시정·특보 재확인";
   }
 
   async function loadWeek(which){
@@ -2442,16 +2484,18 @@ render(thisWeek);
     }
 
     lookupBtn.disabled=true;
-    stateEl.innerHTML="<b>공식 데이터 조회 중</b> · 국립해양조사원 조위와 기상청 단기예보를 확인하고 있습니다.";
+    stateEl.innerHTML="<b>공식 데이터 조회 중</b> · 국립해양조사원 조위와 기상청 단기예보(날씨·기온·풍속·파고)를 확인하고 있습니다.";
     const days=weekDates(which).map(blankDay);
     let weatherDays=new Map();
     let weatherError=null;
     try { weatherDays=await loadWeather(meta); }
     catch(err){ weatherError=err; console.warn(err); }
 
+    const warningInfo=await loadWarning(meta);
+
     let tideCount=0;
     for(const day of days){
-      day.weather=summarizeWeather(weatherDays.get(ymd8(day.date)));
+      day.weather=summarizeWeather(weatherDays.get(ymd8(day.date))); day.warning=warningInfo.status;
       try {
         const tide=await loadTide(meta,day.date);
         day.low=tide.low;
@@ -2464,7 +2508,7 @@ render(thisWeek);
     renderRows(days);
     updateQuick(days);
     const weatherCount=days.filter(d=>d.weather).length;
-    stateEl.innerHTML=`<b>공식 데이터 조회 완료</b> · 조위 ${tideCount}/7일, 단기예보 ${weatherCount}/7일 확인. 아직 연결하지 않은 항목은 임의값 없이 ‘확인필요’로 표시합니다.${weatherError?" 기상청 단기예보는 현재 재확인이 필요합니다.":""}`;
+    stateEl.innerHTML=`<b>공식 데이터 조회 완료</b> · 조위 ${tideCount}/7일, 단기예보 ${weatherCount}/7일 확인. 날씨·기온·풍속·파고는 기상청 응답 범위에서 표시하고, 공식 응답이 없거나 확정 로직이 필요한 항목만 ‘확인필요’로 표시합니다.${weatherError?" 기상청 단기예보는 현재 재확인이 필요합니다.":""}`;
     lookupBtn.disabled=false;
   }
 
