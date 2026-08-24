@@ -1,1774 +1,219 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="light">
-
-  <title>서서랩 해루질 조회기</title>
-
-  <style>
-    :root {
-      --bg: #f5f7fb;
-      --card: #ffffff;
-      --text: #172033;
-      --muted: #667085;
-      --line: #e4e7ec;
-      --brand: #1357d8;
-      --brand-soft: #eef4ff;
-      --good: #087a55;
-      --warn: #b54708;
-      --bad: #b42318;
-      --shadow: 0 10px 30px rgba(16, 24, 40, 0.07);
-      --radius: 18px;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family:
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.55;
-    }
-
-    .wrap {
-      width: min(980px, calc(100% - 28px));
-      margin: 0 auto;
-      padding: 28px 0 56px;
-    }
-
-    .hero {
-      background: linear-gradient(135deg, #0f3f9f, #1769e0);
-      color: #ffffff;
-      padding: 28px;
-      border-radius: 24px;
-      box-shadow: var(--shadow);
-    }
-
-    .hero h1 {
-      margin: 0 0 8px;
-      font-size: clamp(26px, 5vw, 38px);
-      letter-spacing: -0.03em;
-    }
-
-    .hero p {
-      margin: 0;
-      opacity: 0.9;
-    }
-
-    .panel,
-    .card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    .panel {
-      margin-top: 18px;
-      padding: 20px;
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1.5fr 1fr auto;
-      gap: 12px;
-      align-items: end;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 7px;
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    select,
-    input,
-    button {
-      width: 100%;
-      min-height: 46px;
-      border-radius: 12px;
-      border: 1px solid #cfd4dc;
-      background: #ffffff;
-      padding: 0 13px;
-      font-size: 15px;
-      color: var(--text);
-    }
-
-    button {
-      border: 0;
-      background: var(--brand);
-      color: #ffffff;
-      font-weight: 800;
-      cursor: pointer;
-      padding: 0 20px;
-    }
-
-    button:disabled {
-      opacity: 0.55;
-      cursor: wait;
-    }
-
-    .notice {
-      margin-top: 12px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .status {
-      margin-top: 18px;
-      padding: 14px 16px;
-      border-radius: 14px;
-      background: var(--brand-soft);
-      color: #24405f;
-    }
-
-    .status.error {
-      background: #fff1f0;
-      color: var(--bad);
-    }
-
-    .status.ok {
-      background: #ecfdf3;
-      color: var(--good);
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-top: 18px;
-    }
-
-    .card {
-      padding: 18px;
-    }
-
-    .card h2 {
-      margin: 0 0 12px;
-      font-size: 17px;
-    }
-
-    .big {
-      font-size: 26px;
-      font-weight: 900;
-      letter-spacing: -0.03em;
-    }
-
-    .sub {
-      margin-top: 4px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .kpis {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-    }
-
-    .kpi {
-      padding: 12px;
-      border-radius: 12px;
-      background: #f8fafc;
-      border: 1px solid #edf0f4;
-    }
-
-    .kpi b {
-      display: block;
-      margin-top: 2px;
-      font-size: 18px;
-    }
-
-    .section {
-      margin-top: 18px;
-    }
-
-    .section .card {
-      padding: 0;
-      overflow: hidden;
-    }
-
-    .section-head {
-      padding: 18px 18px 10px;
-    }
-
-    .section-head h2 {
-      margin: 0;
-      font-size: 18px;
-    }
-
-    .table-wrap {
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 720px;
-    }
-
-    th,
-    td {
-      padding: 12px 14px;
-      text-align: center;
-      border-top: 1px solid var(--line);
-      white-space: nowrap;
-    }
-
-    th {
-      background: #f8fafc;
-      font-size: 13px;
-      color: #475467;
-    }
-
-    td:first-child,
-    th:first-child {
-      text-align: left;
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 4px 8px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    .badge.good {
-      background: #ecfdf3;
-      color: var(--good);
-    }
-
-    .badge.warn {
-      background: #fff6ed;
-      color: var(--warn);
-    }
-
-    .badge.neutral {
-      background: #f2f4f7;
-      color: #475467;
-    }
-
-    .foot {
-      margin-top: 14px;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    @media (max-width: 760px) {
-      .form-grid,
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hero {
-        padding: 22px;
-      }
-
-      .wrap {
-        width: min(calc(100% - 20px), 980px);
-        padding-top: 14px;
-      }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>서서연구소 서해안 해루질 출조 조회기 V7</title>
+<style>
+:root{--bg:#f3f8fb;--card:#fff;--line:#dce7ee;--text:#14263a;--muted:#6d7d8c;--blue:#0d72ad;--green:#167651;--greenbg:#eaf7f1;--amber:#a76100;--amberbg:#fff5e5;--red:#b42318;--redbg:#fff0f0}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(#f8fbfd,#eef5f9);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",Arial,sans-serif;color:var(--text)}
+.wrap{max-width:1080px;margin:auto;padding:12px}.hero{background:linear-gradient(135deg,#0d5d8d,#123f65);color:#fff;border-radius:22px;padding:22px 20px}.hero h1{margin:0 0 7px;font-size:25px}.hero p{margin:0;font-size:14px;line-height:1.55}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:17px;margin-top:14px;box-shadow:0 5px 18px rgba(20,55,80,.05)}
+.title{display:flex;align-items:center;gap:8px;font-size:19px;font-weight:950;margin-bottom:12px}.title:before{content:"";width:5px;height:21px;background:#18a0cf;border-radius:9px}
+.selectors{display:grid;grid-template-columns:1fr 1fr auto;gap:9px}select,button{height:46px;border:1px solid #cfdbe3;border-radius:11px;background:#fff;padding:0 12px;font:inherit}button.action{background:#0d72ad;color:#fff;font-weight:900}
+.info,.warning{font-size:12px;line-height:1.62;padding:11px 13px;border-radius:12px;margin-top:10px}.info{background:#eef7fb;color:#415769}.warning{background:#fff8e8;color:#65491d;border:1px solid #efd7aa}
+.quick{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}.q{padding:14px;border:1px solid var(--line);border-radius:14px;background:#f8fbfd}.q.good{background:var(--greenbg)}.q.warn{background:var(--amberbg)}.q small{display:block;color:var(--muted);font-weight:850}.q strong{display:block;font-size:18px;margin-top:4px}
+.tabs{display:flex;gap:8px;margin-bottom:7px}.tab{height:auto;padding:9px 15px;background:#fff;font-weight:900}.tab.active{background:#0d72ad;color:#fff;border-color:#0d72ad}.mobile-hint{display:none;text-align:right;font-size:11px;color:var(--muted);margin-bottom:8px}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px}table{width:100%;min-width:1120px;border-collapse:collapse;background:#fff}th,td{border-bottom:1px solid #e8eef2;padding:10px 8px;text-align:center;font-size:12px;white-space:nowrap}th{background:#edf5fa;font-weight:950}
+tr.best{background:#eef8ff;box-shadow:inset 4px 0 #168bc3}tr.cautionrow{background:#fffaf0}tr.past{opacity:.46}tr.today{background:#eef8ff;box-shadow:inset 4px 0 #168bc3}button.action:disabled{opacity:.6;cursor:wait}.datebtn{height:auto;border:0;background:transparent;padding:2px;color:#0a6fa7;font-weight:950;text-decoration:underline;text-underline-offset:3px}
+.status{display:inline-block;border-radius:999px;padding:5px 8px;font-size:11px;font-weight:950}.good{background:var(--greenbg);color:var(--green)}.normal{background:#edf2f5;color:#4e6070}.caution{background:var(--amberbg);color:var(--amber)}
+.detail{display:none;margin-top:12px;border:1px solid var(--line);border-radius:14px;background:#f8fbfd;padding:14px}.detail.open{display:block}.detail h3{margin:0 0 10px;font-size:17px}.timecards{display:grid;grid-template-columns:1fr 1fr;gap:9px}.timecard{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff}.timecard.exit{background:#edf8f4}.timecard.ref{background:#f1f7fb}.timecard small{display:block;color:var(--muted)}.timecard strong{font-size:17px}
+.metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:9px}.metric{background:#fff;border:1px solid var(--line);border-radius:11px;padding:9px}.metric span{display:block;color:var(--muted);font-size:10px}.metric b{font-size:13px}
+.reg-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px}.rules{font-size:13px;line-height:1.75;color:#405467}.source{font-size:11px;color:var(--muted);line-height:1.65}.footer{text-align:center;color:#71808c;font-size:11px;line-height:1.6}
+@media(max-width:700px){.wrap{padding:9px}.hero{padding:18px 16px}.hero h1{font-size:21px}.selectors,.quick,.timecards{grid-template-columns:1fr}.metrics{grid-template-columns:1fr 1fr}.mobile-hint{display:block}.card{padding:14px}}
+</style>
 </head>
-
-<body>
-
-  <main class="wrap">
-
-    <section class="hero">
-      <h1>서서랩 해루질 조회기</h1>
-      <p>
-        국립해양조사원 조위와
-        기상청 단기예보를
-        한 화면에서 확인합니다.
-      </p>
-    </section>
-
-
-    <section class="panel">
-
-      <div class="form-grid">
-
-        <div>
-          <label for="station">조위관측소</label>
-          <select id="station"></select>
-        </div>
-
-        <div>
-          <label for="date">조회일</label>
-          <input id="date" type="date">
-        </div>
-
-        <div>
-          <button id="searchBtn" type="button">
-            조회하기
-          </button>
-        </div>
-
-      </div>
-
-      <div class="notice">
-        ※ 조위는 국립해양조사원 관측소 기준입니다.
-        실제 해루질 포인트와 거리가 있는 경우
-        현장 조위와 차이가 발생할 수 있습니다.
-      </div>
-
-    </section>
-
-
-    <div id="status" class="status">
-      관측소와 날짜를 선택한 뒤 조회하세요.
-    </div>
-
-
-    <section id="summary" class="grid hidden">
-
-      <article class="card">
-        <h2>관측소</h2>
-
-        <div id="stationName" class="big">
-          -
-        </div>
-
-        <div id="stationCoord" class="sub">
-          -
-        </div>
-      </article>
-
-
-      <article class="card">
-        <h2>예측 조위</h2>
-
-        <div class="kpis">
-
-          <div class="kpi">
-            <span>최저</span>
-
-            <b id="lowTide">
-              -
-            </b>
-
-            <small id="lowTime">
-              -
-            </small>
-          </div>
-
-
-          <div class="kpi">
-            <span>최고</span>
-
-            <b id="highTide">
-              -
-            </b>
-
-            <small id="highTime">
-              -
-            </small>
-          </div>
-
-        </div>
-
-        <div class="sub">
-          시간 간격 예측값 중 최저·최고값
-        </div>
-      </article>
-
-
-      <article class="card">
-        <h2>날씨 요약</h2>
-
-        <div id="weatherNow" class="big">
-          -
-        </div>
-
-        <div id="weatherSub" class="sub">
-          -
-        </div>
-      </article>
-
-    </section>
-
-
-    <section id="tideSection" class="section hidden">
-
-      <div class="card">
-
-        <div class="section-head">
-          <h2>조위 상세</h2>
-        </div>
-
-        <div class="table-wrap">
-
-          <table>
-
-            <thead>
-              <tr>
-                <th>시간</th>
-                <th>실측 조위(cm)</th>
-                <th>예측 조위(cm)</th>
-                <th>상태</th>
-              </tr>
-            </thead>
-
-            <tbody id="tideBody"></tbody>
-
-          </table>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <section id="weatherSection" class="section hidden">
-
-      <div class="card">
-
-        <div class="section-head">
-          <h2>날씨 상세</h2>
-        </div>
-
-        <div class="table-wrap">
-
-          <table>
-
-            <thead>
-              <tr>
-                <th>시간</th>
-                <th>기온</th>
-                <th>하늘</th>
-                <th>강수확률</th>
-                <th>강수</th>
-                <th>풍속</th>
-                <th>습도</th>
-              </tr>
-            </thead>
-
-            <tbody id="weatherBody"></tbody>
-
-          </table>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <p class="foot">
-      데이터 출처:
-      국립해양조사원 조위관측소 실측·예측 조위 /
-      기상청 단기예보.
-      안전 판단은 현장 상황과
-      공식 기상특보를 함께 확인하세요.
-    </p>
-
-  </main>
-
-
-  <script>
-    (() => {
-
-      "use strict";
-
-
-      /*
-       * Cloudflare Worker
-       *
-       * 인증키는 이 HTML에 들어가지 않습니다.
-       *
-       * KHOA_API_KEY
-       * KMA_API_KEY
-       *
-       * 두 키 모두 Cloudflare Secret에서 사용합니다.
-       */
-
-      const API_BASE =
-        "https://haerujil-api.yangbbo0616.workers.dev";
-
-
-      /*
-       * 국립해양조사원 공식 관측소 코드
-       * 서해안 관련 관측소 중심
-       */
-
-      const STATIONS = [
-        ["DT_0001", "인천"],
-        ["DT_0002", "평택"],
-        ["DT_0003", "영광"],
-        ["DT_0007", "목포"],
-        ["DT_0008", "안산"],
-        ["DT_0017", "대산"],
-        ["DT_0018", "군산"],
-        ["DT_0024", "장항"],
-        ["DT_0025", "보령"],
-        ["DT_0032", "강화대교"],
-        ["DT_0035", "흑산도"],
-        ["DT_0037", "어청도"],
-        ["DT_0043", "영흥도"],
-        ["DT_0044", "영종대교"],
-        ["DT_0050", "태안"],
-        ["DT_0051", "서천마량"],
-        ["DT_0052", "인천송도"],
-        ["DT_0065", "덕적도"],
-        ["DT_0066", "향화도"],
-        ["DT_0067", "안흥"],
-        ["DT_0068", "위도"],
-        ["DT_0093", "소무의도"]
-      ];
-
-
-      const el =
-        (id) => document.getElementById(id);
-
-
-      const stationEl =
-        el("station");
-
-      const dateEl =
-        el("date");
-
-      const searchBtn =
-        el("searchBtn");
-
-      const statusEl =
-        el("status");
-
-
-      /*
-       * 관측소 선택 목록
-       */
-
-      STATIONS.forEach(([code, name]) => {
-
-        const option =
-          document.createElement("option");
-
-        option.value =
-          code;
-
-        option.textContent =
-          `${name} (${code})`;
-
-        stationEl.appendChild(option);
-
-      });
-
-
-      /*
-       * 오늘 날짜 기본 설정
-       */
-
-      dateEl.value =
-        kstDateString(new Date());
-
-
-      /*
-       * 대한민국 시간
-       */
-
-      function kstParts(date = new Date()) {
-
-        return new Intl.DateTimeFormat(
-          "en-CA",
-          {
-            timeZone: "Asia/Seoul",
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-            hour: "2-digit",
-            minute: "2-digit",
-            hourCycle: "h23"
-          }
-        )
-        .formatToParts(date)
-        .reduce(
-          (result, part) => {
-
-            result[part.type] =
-              part.value;
-
-            return result;
-
-          },
-          {}
-        );
-
-      }
-
-
-      function kstDateString(date = new Date()) {
-
-        const p =
-          kstParts(date);
-
-        return (
-          `${p.year}-${p.month}-${p.day}`
-        );
-
-      }
-
-
-      function yyyymmdd(dateString) {
-
-        return dateString.replaceAll("-", "");
-
-      }
-
-
-      /*
-       * 상태 메시지
-       */
-
-      function setStatus(message, kind = "") {
-
-        statusEl.textContent =
-          message;
-
-        statusEl.className =
-          `status${kind ? " " + kind : ""}`;
-
-      }
-
-
-      /*
-       * API 호출
-       */
-
-      async function fetchJson(
-        url,
-        timeoutMs = 12000
-      ) {
-
-        const controller =
-          new AbortController();
-
-        const timer =
-          setTimeout(
-            () => controller.abort(),
-            timeoutMs
-          );
-
-        try {
-
-          const response =
-            await fetch(
-              url,
-              {
-                signal: controller.signal,
-                cache: "no-store"
-              }
-            );
-
-          const text =
-            await response.text();
-
-          if (!response.ok) {
-
-            throw new Error(
-              `HTTP ${response.status}: ` +
-              text.slice(0, 180)
-            );
-
-          }
-
-          try {
-
-            return JSON.parse(text);
-
-          }
-          catch {
-
-            throw new Error(
-              "API 응답이 JSON 형식이 아닙니다: " +
-              text.slice(0, 180)
-            );
-
-          }
-
-        }
-        finally {
-
-          clearTimeout(timer);
-
-        }
-
-      }
-
-
-      /*
-       * API 응답 구조 통합
-       *
-       * KMA:
-       * response.header / response.body
-       *
-       * KHOA 환경에 따라:
-       * response.header / response.body
-       * 또는
-       * header / body
-       *
-       * 둘 다 처리
-       */
-
-      function apiRoot(payload) {
-
-        return payload?.response ?? payload ?? {};
-
-      }
-
-
-      function apiHeader(payload) {
-
-        return apiRoot(payload)?.header ?? {};
-
-      }
-
-
-      function apiBody(payload) {
-
-        return apiRoot(payload)?.body ?? {};
-
-      }
-
-
-      function apiResultCode(payload) {
-
-        const value =
-          apiHeader(payload)?.resultCode;
-
-        if (
-          value === undefined ||
-          value === null
-        ) {
-
-          return "";
-
-        }
-
-        return String(value).trim();
-
-      }
-
-
-      function apiResultMessage(payload) {
-
-        return (
-          apiHeader(payload)?.resultMsg
-          ??
-          "알 수 없음"
-        );
-
-      }
-
-
-      function apiSuccess(payload) {
-
-        const code =
-          apiResultCode(payload);
-
-        return (
-          code === "00" ||
-          code === "0"
-        );
-
-      }
-
-
-      function normalizeItems(payload) {
-
-        const items =
-          apiBody(payload)
-            ?.items
-            ?.item;
-
-        if (!items) {
-
-          return [];
-
-        }
-
-        return Array.isArray(items)
-          ? items
-          : [items];
-
-      }
-
-
-      /*
-       * 기상청 단기예보
-       * 최신 발표시각 계산
-       */
-
-      function getKmaBase() {
-
-        const KST_OFFSET =
-          9 * 60 * 60 * 1000;
-
-        const SAFE_DELAY =
-          20 * 60 * 1000;
-
-        const now =
-          new Date(
-            Date.now()
-            + KST_OFFSET
-            - SAFE_DELAY
-          );
-
-        const schedules =
-          [
-            2,
-            5,
-            8,
-            11,
-            14,
-            17,
-            20,
-            23
-          ];
-
-        const currentHour =
-          now.getUTCHours();
-
-        let baseHour =
-          schedules
-            .filter(
-              hour =>
-                hour <= currentHour
-            )
-            .pop();
-
-        let baseDate =
-          new Date(now.getTime());
-
-        if (baseHour === undefined) {
-
-          baseHour =
-            23;
-
-          baseDate.setUTCDate(
-            baseDate.getUTCDate() - 1
-          );
-
-        }
-
-        const year =
-          baseDate.getUTCFullYear();
-
-        const month =
-          String(
-            baseDate.getUTCMonth() + 1
-          )
-          .padStart(2, "0");
-
-        const day =
-          String(
-            baseDate.getUTCDate()
-          )
-          .padStart(2, "0");
-
-        return {
-          base_date:
-            `${year}${month}${day}`,
-
-          base_time:
-            `${String(baseHour)
-              .padStart(2, "0")}00`
-        };
-
-      }
-
-
-      /*
-       * 위경도 → 기상청 DFS 격자
-       */
-
-      function dfsGrid(lat, lon) {
-
-        const RE =
-          6371.00877;
-
-        const GRID =
-          5.0;
-
-        const SLAT1 =
-          30.0;
-
-        const SLAT2 =
-          60.0;
-
-        const OLON =
-          126.0;
-
-        const OLAT =
-          38.0;
-
-        const XO =
-          43;
-
-        const YO =
-          136;
-
-        const DEGRAD =
-          Math.PI / 180.0;
-
-        const re =
-          RE / GRID;
-
-        const slat1 =
-          SLAT1 * DEGRAD;
-
-        const slat2 =
-          SLAT2 * DEGRAD;
-
-        const olon =
-          OLON * DEGRAD;
-
-        const olat =
-          OLAT * DEGRAD;
-
-        let sn =
-          Math.tan(
-            Math.PI * 0.25 +
-            slat2 * 0.5
-          )
-          /
-          Math.tan(
-            Math.PI * 0.25 +
-            slat1 * 0.5
-          );
-
-        sn =
-          Math.log(
-            Math.cos(slat1) /
-            Math.cos(slat2)
-          )
-          /
-          Math.log(sn);
-
-        let sf =
-          Math.tan(
-            Math.PI * 0.25 +
-            slat1 * 0.5
-          );
-
-        sf =
-          Math.pow(sf, sn)
-          *
-          Math.cos(slat1)
-          /
-          sn;
-
-        let ro =
-          Math.tan(
-            Math.PI * 0.25 +
-            olat * 0.5
-          );
-
-        ro =
-          re
-          *
-          sf
-          /
-          Math.pow(ro, sn);
-
-        let ra =
-          Math.tan(
-            Math.PI * 0.25 +
-            lat * DEGRAD * 0.5
-          );
-
-        ra =
-          re
-          *
-          sf
-          /
-          Math.pow(ra, sn);
-
-        let theta =
-          lon * DEGRAD - olon;
-
-        if (theta > Math.PI) {
-
-          theta -=
-            2 * Math.PI;
-
-        }
-
-        if (theta < -Math.PI) {
-
-          theta +=
-            2 * Math.PI;
-
-        }
-
-        theta *=
-          sn;
-
-        return {
-          nx:
-            Math.floor(
-              ra * Math.sin(theta)
-              + XO
-              + 0.5
-            ),
-
-          ny:
-            Math.floor(
-              ro
-              - ra * Math.cos(theta)
-              + YO
-              + 0.5
-            )
-        };
-
-      }
-
-
-      /*
-       * 조위 상태
-       */
-
-      function tideClass(
-        value,
-        min,
-        max
-      ) {
-
-        if (
-          !Number.isFinite(value) ||
-          !Number.isFinite(min) ||
-          !Number.isFinite(max) ||
-          max === min
-        ) {
-
-          return "";
-
-        }
-
-        const ratio =
-          (value - min) /
-          (max - min);
-
-        if (ratio <= 0.25) {
-
-          return (
-            '<span class="badge good">' +
-            '낮은 조위' +
-            '</span>'
-          );
-
-        }
-
-        if (ratio >= 0.75) {
-
-          return (
-            '<span class="badge warn">' +
-            '높은 조위' +
-            '</span>'
-          );
-
-        }
-
-        return (
-          '<span class="badge neutral">' +
-          '중간' +
-          '</span>'
-        );
-
-      }
-
-
-      /*
-       * 기상청 코드 → 한글
-       */
-
-      function skyText(sky, pty) {
-
-        const precipitation =
-          Number(pty);
-
-        if (precipitation === 1) {
-          return "비";
-        }
-
-        if (precipitation === 2) {
-          return "비/눈";
-        }
-
-        if (precipitation === 3) {
-          return "눈";
-        }
-
-        if (precipitation === 4) {
-          return "소나기";
-        }
-
-        const skyCode =
-          Number(sky);
-
-        if (skyCode === 1) {
-          return "맑음";
-        }
-
-        if (skyCode === 3) {
-          return "구름많음";
-        }
-
-        if (skyCode === 4) {
-          return "흐림";
-        }
-
-        return "-";
-
-      }
-
-
-      /*
-       * 시간별 날씨 묶기
-       */
-
-      function groupWeather(
-        items,
-        targetDate
-      ) {
-
-        const map =
-          new Map();
-
-        for (const item of items) {
-
-          if (
-            item.fcstDate !== targetDate
-          ) {
-
-            continue;
-
-          }
-
-          const time =
-            item.fcstTime;
-
-          if (!map.has(time)) {
-
-            map.set(time, {});
-
-          }
-
-          map.get(time)[item.category] =
-            item.fcstValue;
-
-        }
-
-        return [...map.entries()]
-          .sort(
-            (a, b) =>
-              a[0].localeCompare(b[0])
-          );
-
-      }
-
-
-      /*
-       * HTML 문자열 안전 처리
-       */
-
-      function escapeHtml(value) {
-
-        return String(value ?? "")
-          .replace(
-            /[&<>'"]/g,
-            character => (
-              {
-                "&": "&amp;",
-                "<": "&lt;",
-                ">": "&gt;",
-                "'": "&#39;",
-                "\"": "&quot;"
-              }[character]
-            )
-          );
-
-      }
-
-
-      /*
-       * 조위 출력
-       */
-
-      function renderTide(items) {
-
-        const values =
-          items
-            .map(
-              item =>
-                Number(item.tdlvHgt)
-            )
-            .filter(Number.isFinite);
-
-        const min =
-          values.length
-            ? Math.min(...values)
-            : NaN;
-
-        const max =
-          values.length
-            ? Math.max(...values)
-            : NaN;
-
-        const minItem =
-          items.find(
-            item =>
-              Number(item.tdlvHgt) === min
-          );
-
-        const maxItem =
-          items.find(
-            item =>
-              Number(item.tdlvHgt) === max
-          );
-
-        el("lowTide").textContent =
-          Number.isFinite(min)
-            ? `${Math.round(min)} cm`
-            : "-";
-
-        el("highTide").textContent =
-          Number.isFinite(max)
-            ? `${Math.round(max)} cm`
-            : "-";
-
-        el("lowTime").textContent =
-          minItem?.obsrvnDt?.slice(11, 16)
-          ?? "-";
-
-        el("highTime").textContent =
-          maxItem?.obsrvnDt?.slice(11, 16)
-          ?? "-";
-
-
-        el("tideBody").innerHTML =
-          items
-            .map(item => {
-
-              const prediction =
-                Number(item.tdlvHgt);
-
-              const actualNumber =
-                Number(item.bscTdlvHgt);
-
-              const actual =
-                Number.isFinite(actualNumber)
-                  ? Math.round(actualNumber)
-                  : "-";
-
-              const predicted =
-                Number.isFinite(prediction)
-                  ? Math.round(prediction)
-                  : "-";
-
-              const time =
-                item.obsrvnDt?.slice(11, 16)
-                ?? "-";
-
-              return (
-                "<tr>" +
-
-                "<td>" +
-                escapeHtml(time) +
-                "</td>" +
-
-                "<td>" +
-                actual +
-                "</td>" +
-
-                "<td>" +
-                predicted +
-                "</td>" +
-
-                "<td>" +
-                tideClass(
-                  prediction,
-                  min,
-                  max
-                ) +
-                "</td>" +
-
-                "</tr>"
-              );
-
-            })
-            .join("");
-
-      }
-
-
-      /*
-       * 날씨 출력
-       */
-
-      function renderWeather(groups) {
-
-        const preferredTimes =
-          [
-            "0000",
-            "0300",
-            "0600",
-            "0900",
-            "1200",
-            "1500",
-            "1800",
-            "2100"
-          ];
-
-        const rows =
-          groups.filter(
-            ([time]) =>
-              preferredTimes.includes(time)
-          );
-
-        const source =
-          rows.length
-            ? rows
-            : groups;
-
-
-        el("weatherBody").innerHTML =
-          source
-            .map(([time, weather]) => {
-
-              const temperature =
-                weather.TMP != null
-                  ? `${weather.TMP}℃`
-                  : "-";
-
-              const pop =
-                weather.POP != null
-                  ? `${weather.POP}%`
-                  : "-";
-
-              const wind =
-                weather.WSD != null
-                  ? `${weather.WSD} m/s`
-                  : "-";
-
-              const humidity =
-                weather.REH != null
-                  ? `${weather.REH}%`
-                  : "-";
-
-              return (
-                "<tr>" +
-
-                "<td>" +
-                time.slice(0, 2) +
-                ":" +
-                time.slice(2) +
-                "</td>" +
-
-                "<td>" +
-                temperature +
-                "</td>" +
-
-                "<td>" +
-                skyText(
-                  weather.SKY,
-                  weather.PTY
-                ) +
-                "</td>" +
-
-                "<td>" +
-                pop +
-                "</td>" +
-
-                "<td>" +
-                escapeHtml(
-                  weather.PCP ?? "-"
-                ) +
-                "</td>" +
-
-                "<td>" +
-                wind +
-                "</td>" +
-
-                "<td>" +
-                humidity +
-                "</td>" +
-
-                "</tr>"
-              );
-
-            })
-            .join("");
-
-
-        if (groups.length) {
-
-          const first =
-            groups[0][1];
-
-          const temperature =
-            first.TMP != null
-              ? `${first.TMP}℃`
-              : "-";
-
-          el("weatherNow").textContent =
-            temperature +
-            " · " +
-            skyText(
-              first.SKY,
-              first.PTY
-            );
-
-          el("weatherSub").textContent =
-            "강수확률 " +
-            (first.POP ?? "-") +
-            "% · 풍속 " +
-            (first.WSD ?? "-") +
-            " m/s · 습도 " +
-            (first.REH ?? "-") +
-            "%";
-
-        }
-        else {
-
-          el("weatherNow").textContent =
-            "예보 없음";
-
-          el("weatherSub").textContent =
-            "선택한 날짜가 단기예보 제공 범위를 벗어났을 수 있습니다.";
-
-        }
-
-      }
-
-
-      /*
-       * 조회
-       */
-
-      async function search() {
-
-        const obsCode =
-          stationEl.value;
-
-        const date =
-          dateEl.value;
-
-        if (!obsCode || !date) {
-
-          setStatus(
-            "관측소와 조회일을 선택하세요.",
-            "error"
-          );
-
-          return;
-
-        }
-
-
-        searchBtn.disabled =
-          true;
-
-        el("summary")
-          .classList
-          .add("hidden");
-
-        el("tideSection")
-          .classList
-          .add("hidden");
-
-        el("weatherSection")
-          .classList
-          .add("hidden");
-
-        setStatus(
-          "조위와 날씨 데이터를 불러오는 중입니다..."
-        );
-
-
-        try {
-
-          const reqDate =
-            yyyymmdd(date);
-
-
-          /*
-           * 1. KHOA 조위
-           */
-
-          const tideUrl =
-            `${API_BASE}/khoa`
-            +
-            "?type=json"
-            +
-            "&obsCode="
-            +
-            encodeURIComponent(obsCode)
-            +
-            "&reqDate="
-            +
-            encodeURIComponent(reqDate)
-            +
-            "&min=60"
-            +
-            "&pageNo=1"
-            +
-            "&numOfRows=300";
-
-
-          const tidePayload =
-            await fetchJson(tideUrl);
-
-
-          if (!apiSuccess(tidePayload)) {
-
-            throw new Error(
-              "조위 API 오류: " +
-              apiResultMessage(tidePayload)
-              +
-              (
-                apiResultCode(tidePayload)
-                  ? ` (${apiResultCode(tidePayload)})`
-                  : ""
-              )
-            );
-
-          }
-
-
-          const tideItems =
-            normalizeItems(tidePayload);
-
-
-          if (!tideItems.length) {
-
-            throw new Error(
-              "선택한 날짜의 조위 데이터가 없습니다."
-            );
-
-          }
-
-
-          /*
-           * KHOA 관측소 좌표
-           */
-
-          const station =
-            tideItems.find(
-              item =>
-                Number.isFinite(
-                  Number(item.lat)
-                )
-                &&
-                Number.isFinite(
-                  Number(item.lot)
-                )
-            )
-            ??
-            tideItems[0];
-
-
-          const lat =
-            Number(station.lat);
-
-          const lon =
-            Number(station.lot);
-
-
-          if (
-            !Number.isFinite(lat) ||
-            !Number.isFinite(lon)
-          ) {
-
-            throw new Error(
-              "관측소 좌표를 확인할 수 없습니다."
-            );
-
-          }
-
-
-          el("stationName").textContent =
-            station.obsvtrNm
-            ??
-            stationEl.options[
-              stationEl.selectedIndex
-            ]?.textContent
-            ??
-            obsCode;
-
-
-          el("stationCoord").textContent =
-            `${lat.toFixed(5)}, ${lon.toFixed(5)}`;
-
-
-          renderTide(tideItems);
-
-
-          /*
-           * KHOA 좌표 → KMA 격자
-           */
-
-          const { nx, ny } =
-            dfsGrid(lat, lon);
-
-
-          /*
-           * 2. KMA 날씨
-           */
-
-          const base =
-            getKmaBase();
-
-
-          const kmaUrl =
-            `${API_BASE}/kma`
-            +
-            "?base_date="
-            +
-            encodeURIComponent(base.base_date)
-            +
-            "&base_time="
-            +
-            encodeURIComponent(base.base_time)
-            +
-            "&nx="
-            +
-            encodeURIComponent(nx)
-            +
-            "&ny="
-            +
-            encodeURIComponent(ny);
-
-
-          const kmaPayload =
-            await fetchJson(kmaUrl);
-
-
-          if (!apiSuccess(kmaPayload)) {
-
-            throw new Error(
-              "기상청 API 오류: " +
-              apiResultMessage(kmaPayload)
-              +
-              (
-                apiResultCode(kmaPayload)
-                  ? ` (${apiResultCode(kmaPayload)})`
-                  : ""
-              )
-            );
-
-          }
-
-
-          const weatherItems =
-            normalizeItems(kmaPayload);
-
-
-          const weatherGroups =
-            groupWeather(
-              weatherItems,
-              reqDate
-            );
-
-
-          renderWeather(weatherGroups);
-
-
-          /*
-           * 화면 표시
-           */
-
-          el("summary")
-            .classList
-            .remove("hidden");
-
-          el("tideSection")
-            .classList
-            .remove("hidden");
-
-          el("weatherSection")
-            .classList
-            .remove("hidden");
-
-
-          if (weatherGroups.length) {
-
-            setStatus(
-              "조위와 날씨 조회가 완료되었습니다.",
-              "ok"
-            );
-
-          }
-          else {
-
-            setStatus(
-              "조위는 정상 조회됐지만 선택한 날짜의 단기예보는 없습니다."
-            );
-
-          }
-
-        }
-        catch (error) {
-
-          console.error(error);
-
-          if (
-            error?.name === "AbortError"
-          ) {
-
-            setStatus(
-              "데이터 요청 시간이 초과되었습니다. 잠시 후 다시 시도하세요.",
-              "error"
-            );
-
-          }
-          else {
-
-            setStatus(
-              error?.message
-              ??
-              "데이터 조회 중 오류가 발생했습니다.",
-              "error"
-            );
-
-          }
-
-        }
-        finally {
-
-          searchBtn.disabled =
-            false;
-
-        }
-
-      }
-
-
-      searchBtn.addEventListener(
-        "click",
-        search
-      );
-
-    })();
-  </script>
-
-</body>
-</html>
+<body><main class="wrap">
+<section class="hero"><h1>🌊 서해안 해루질 출조 조회기</h1><p>물때 · 날씨 · 해상조건 · 금어기 정보를 한눈에 확인하고, 관계기관 안전수칙을 우선해 출조 계획에 참고하세요.</p></section>
+
+<section class="card">
+<div class="title">지역·포인트 선택</div>
+<div class="selectors">
+<select id="region">
+<option value="gg">인천·경기 서해안</option>
+<option value="cn">충남 서해안</option>
+<option value="jb">전북 서해안</option>
+<option value="jn">전남 서해안</option>
+</select>
+<select id="point"></select>
+<button class="action" id="lookupBtn" type="button">조회하기</button>
+</div>
+<div class="info">금주·차주는 <b>접속일 기준 월~일</b>로 자동 계산합니다. 오늘 날짜는 강조하고 이미 지난 날짜는 흐리게 표시합니다.</div>
+<div class="warning" id="liveState"><b>공식 데이터 연결본</b> · 조위는 국립해양조사원, 날씨·기온·풍속은 기상청 단기예보에서 조회합니다. 아직 연결하지 않은 항목은 임의값 없이 ‘확인필요’로 표시합니다.</div>
+</section>
+
+<section class="card">
+<div class="title">이번 주 한눈에</div>
+<div class="quick">
+<div class="q good"><small>⭐ 우선 확인일</small><strong>8/28 금요일</strong></div>
+<div class="q"><small>🌊 이번 주 전반</small><strong>목~금 상대적 양호</strong></div>
+<div class="q warn"><small>⚠️ 조건 주의일</small><strong>8/29 토요일</strong></div>
+</div>
+</section>
+
+<section class="card">
+<div class="title">주간 상세 비교</div>
+<div class="tabs"><button class="tab active" type="button" data-week="this">금주</button><button class="tab" type="button" data-week="next">차주</button></div>
+<div class="mobile-hint">← 좌우로 보기 · 날짜 터치 = 상세</div>
+<div class="tablewrap"><table>
+<thead><tr><th>일자</th><th>날씨</th><th>기온</th><th>간조</th><th>🛟 철수 권고</th><th>🎣 해루질 참고</th><th>물때</th><th>풍속</th><th>파고</th><th>시정·안개</th><th>특보</th><th>종합조건</th></tr></thead>
+<tbody id="weekBody"></tbody>
+</table></div>
+<div id="detail" class="detail"></div>
+</section>
+
+<section class="card">
+<div class="title">🐙 주요 대상 · 금어기/금지체장</div>
+<div class="reg-wrap"><table style="min-width:850px">
+<thead><tr><th>대상</th><th>현재 상태</th><th>금어기</th><th>금지체장·체중</th><th>비고</th></tr></thead>
+<tbody>
+<tr><td>낙지</td><td><span class="status normal">지역기준 확인</span></td><td>시·도별 별도 지정</td><td>공식 기준 적용</td><td>선택 지역 기준 자동 표시</td></tr>
+<tr><td>참문어</td><td><span class="status normal">지역기준 확인</span></td><td>시·도별 별도 지정</td><td>공식 기준 적용</td><td>선택 지역 기준 자동 표시</td></tr>
+<tr><td>꽃게</td><td><span class="status normal">공식 고시 확인</span></td><td>해양수산부 고시 기간 적용</td><td>공식 기준 적용</td><td>외포란 암컷 등 별도 규정 확인</td></tr>
+</tbody></table></div>
+<div class="source" style="margin-top:10px"><b>규정 기준:</b> 해양수산부 2026.1.1 기준 공식 금어기·금지체장 자료 및 해당 시·도 별도 규정<br><b>규정 최종 확인일:</b> 2026.8.24.<br>규정 개정 시 DB를 별도 갱신합니다. 현재 상태 판정은 선택 지역·조회일과 등록된 최신 규정 DB를 대조해 자동 처리합니다.</div>
+</section>
+
+<section class="card">
+<div class="title">조회정보 안내</div>
+<div class="rules">본 조회기는 <b>공식 조석·기상·해양정보를 정리하여 출조 계획에 참고할 수 있도록 제공하는 정보 서비스</b>입니다.<br><br>
+<b>🛟 철수 권고시간</b>은 확인 가능한 관계기관의 안전수칙과 공식 조석정보를 우선해 보수적으로 안내합니다.<br>
+<b>🎣 해루질 참고시간</b>은 조석·조위 흐름을 바탕으로 활동 여건을 확인하기 위한 참고정보입니다.<br>
+날씨·풍속·파고·시정·안개·기상특보 등은 주간 종합조건과 주의정보에 함께 반영합니다.<br><br>
+<b>⚠️ 조회 결과는 출조 또는 안전을 보장하지 않습니다.</b> 실제 갯벌의 갯골·수심·조류·진입로·현장 지형 및 기상상황은 조회정보와 다를 수 있습니다. 현장 출입통제와 해양경찰·지자체 등 관계기관의 안전안내를 항상 우선하세요.</div>
+</section>
+
+<section class="card"><div class="footer">© 2026 서서연구소 · 해루질 출조 조회기<br>조회기 UI·구성·가공 데이터 및 자체 프로그램 코드의 무단 복제·재배포를 금합니다.<br>공공데이터 자체의 권리와 이용조건은 각 제공기관 기준을 따릅니다.</div></section>
+</main>
+
+<script>
+(() => {
+  "use strict";
+
+  const API_BASE="https://haerujil-api.yangbbo0616.workers.dev";
+  const POINTS={"gg":["인천 중구 · 실미도","인천 옹진 · 선재도","인천 옹진 · 영흥도","인천 중구 · 을왕리","경기 화성 · 제부도","경기 안산 · 대부도"],"cn":["충남 당진 · 도비도","충남 태안 · 학암포","충남 태안 · 몽산포","충남 태안 · 청포대","충남 태안 · 안면도","충남 보령 · 무창포","충남 서천 · 춘장대"],"jb":["전북 부안 · 고사포","전북 부안 · 하섬","전북 부안 · 격포","전북 부안 · 변산","전북 부안 · 곰소만"],"jn":["전남 영광 · 가마미","전남 영광 · 백수해안","전남 함평 · 돌머리","전남 무안 · 홀통","전남 무안 · 조금나루","전남 무안 · 톱머리","전남 무안 · 도리포"]};
+  const META={"인천 중구 · 실미도":{"nx":50,"ny":123,"obsCode":"DT_0001","stationName":"인천"},"인천 옹진 · 선재도":{"nx":52,"ny":119,"obsCode":"DT_0043","stationName":"영흥도"},"인천 옹진 · 영흥도":{"nx":51,"ny":120,"obsCode":"DT_0043","stationName":"영흥도"},"충남 태안 · 몽산포":{"nx":48,"ny":107,"obsCode":"DT_0067","stationName":"안흥"},"경기 화성 · 제부도":{"nx":54,"ny":118,"obsCode":"DT_0008","stationName":"안산"},"경기 안산 · 대부도":{"nx":53,"ny":120,"obsCode":"DT_0008","stationName":"안산"},"충남 태안 · 학암포":{"nx":47,"ny":112,"obsCode":"DT_0050","stationName":"태안"},"충남 태안 · 청포대":{"nx":48,"ny":106,"obsCode":"DT_0067","stationName":"안흥"},"충남 보령 · 무창포":{"nx":52,"ny":98,"obsCode":"DT_0051","stationName":"서천마량"},"충남 태안 · 안면도":{"nx":49,"ny":104,"obsCode":"DT_0025","stationName":"보령"},"충남 서천 · 춘장대":{"nx":52,"ny":96,"obsCode":"DT_0051","stationName":"서천마량"},"전북 부안 · 고사포":{"nx":52,"ny":85,"obsCode":"DT_0068","stationName":"위도"},"전북 부안 · 격포":{"nx":51,"ny":85,"obsCode":"DT_0068","stationName":"위도"},"전북 부안 · 변산":{"nx":52,"ny":86,"obsCode":"DT_0068","stationName":"위도"},"전북 부안 · 곰소만":{"nx":54,"ny":84,"obsCode":"DT_0003","stationName":"영광"},"전북 부안 · 하섬":{"nx":52,"ny":85,"obsCode":"DT_0068","stationName":"위도"},"전남 무안 · 도리포":{"nx":49,"ny":74,"obsCode":"DT_0003","stationName":"영광"},"인천 중구 · 을왕리":{"nx":49,"ny":124,"obsCode":"DT_0001","stationName":"인천"},"충남 당진 · 도비도":{"nx":51,"ny":115,"obsCode":"DT_0017","stationName":"대산"},"전남 함평 · 돌머리":{"nx":51,"ny":73,"obsCode":"DT_0007","stationName":"목포"},"전남 영광 · 가마미":{"nx":50,"ny":80,"obsCode":"DT_0003","stationName":"영광"},"전남 영광 · 백수해안":{"nx":50,"ny":79,"obsCode":"DT_0003","stationName":"영광"},"전남 무안 · 홀통":{"nx":49,"ny":72,"obsCode":"DT_0007","stationName":"목포"},"전남 무안 · 조금나루":{"nx":49,"ny":71,"obsCode":"DT_0007","stationName":"목포"},"전남 무안 · 톱머리":{"nx":50,"ny":70,"obsCode":"DT_0007","stationName":"목포"}};
+
+  const region=document.getElementById("region");
+  const point=document.getElementById("point");
+  const lookupBtn=document.getElementById("lookupBtn");
+  const liveState=document.getElementById("liveState");
+  const body=document.getElementById("weekBody");
+  const detail=document.getElementById("detail");
+  const tabs=[...document.querySelectorAll(".tab[data-week]")];
+  const quick=[...document.querySelectorAll(".quick .q strong")];
+  const koDays=["일","월","화","수","목","금","토"];
+  let activeWeek="this";
+  const cache=new Map();
+
+  function setPoints(){
+    point.innerHTML="";
+    POINTS[region.value].forEach(name=>{
+      const o=document.createElement("option");
+      o.value=name;o.textContent=name;point.appendChild(o);
+    });
+  }
+  region.addEventListener("change",()=>{setPoints();cache.clear();renderEmpty(activeWeek);});
+  setPoints();
+
+  const pad=n=>String(n).padStart(2,"0");
+  const ymd=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+  const ymd8=d=>`${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}`;
+  const label=d=>`${d.getMonth()+1}/${d.getDate()} ${koDays[d.getDay()]}`;
+  function mondayOf(d){const x=new Date(d.getFullYear(),d.getMonth(),d.getDate());const day=x.getDay();x.setDate(x.getDate()-(day===0?6:day-1));x.setHours(0,0,0,0);return x;}
+  function addDays(d,n){const x=new Date(d);x.setDate(x.getDate()+n);return x;}
+  function sameDay(a,b){return ymd(a)===ymd(b);}
+  function weekDates(which){const t=new Date();t.setHours(0,0,0,0);const m=mondayOf(t);const s=addDays(m,which==="next"?7:0);return Array.from({length:7},(_,i)=>addDays(s,i));}
+
+  function apiRoot(p){return p?.response??p??{};}
+  function apiHeader(p){return apiRoot(p)?.header??{};}
+  function apiBody(p){return apiRoot(p)?.body??{};}
+  function apiItems(p){const x=apiBody(p)?.items?.item;if(!x)return[];return Array.isArray(x)?x:[x];}
+  function apiOk(p){const c=String(apiHeader(p)?.resultCode??"").trim();return c==="00"||c==="0";}
+  function apiMsg(p){return apiHeader(p)?.resultMsg??"응답 상태 확인 필요";}
+
+  async function fetchJson(url,timeout=15000){
+    const ctl=new AbortController();const timer=setTimeout(()=>ctl.abort(),timeout);
+    try{const res=await fetch(url,{signal:ctl.signal,cache:"no-store"});const txt=await res.text();if(!res.ok)throw new Error(`HTTP ${res.status}`);try{return JSON.parse(txt);}catch{throw new Error("JSON 응답 파싱 실패");}}finally{clearTimeout(timer);}
+  }
+
+  function getKmaBase(){
+    const schedules=[2,5,8,11,14,17,20,23];
+    const now=new Date(Date.now()+9*3600000-20*60000);const h=now.getUTCHours();
+    let bh=schedules.filter(v=>v<=h).pop();let bd=new Date(now);
+    if(bh===undefined){bh=23;bd.setUTCDate(bd.getUTCDate()-1);}
+    return {base_date:`${bd.getUTCFullYear()}${pad(bd.getUTCMonth()+1)}${pad(bd.getUTCDate())}`,base_time:`${pad(bh)}00`};
+  }
+
+  function groupWeather(items){
+    const days=new Map();
+    items.forEach(it=>{if(!it.fcstDate||!it.fcstTime)return;if(!days.has(it.fcstDate))days.set(it.fcstDate,new Map());const m=days.get(it.fcstDate);if(!m.has(it.fcstTime))m.set(it.fcstTime,{});m.get(it.fcstTime)[it.category]=it.fcstValue;});
+    return days;
+  }
+  function skyIcon(sky,pty){const p=Number(pty),s=Number(sky);if(p===1)return"🌧️";if(p===2)return"🌨️";if(p===3)return"❄️";if(p===4)return"🌦️";if(s===1)return"☀️";if(s===3)return"⛅";if(s===4)return"☁️";return"—";}
+  function weatherSummary(times){
+    if(!times||!times.size)return null;const e=[...times.entries()].sort((a,b)=>a[0].localeCompare(b[0]));
+    const temps=e.map(([,v])=>Number(v.TMP)).filter(Number.isFinite);const winds=e.map(([,v])=>Number(v.WSD)).filter(Number.isFinite);
+    const target=e.find(([t])=>t==="1200")||e.find(([t])=>t==="1500")||e[Math.floor(e.length/2)];const w=target?.[1]||{};
+    return {icon:skyIcon(w.SKY,w.PTY),tmin:temps.length?Math.min(...temps):null,tmax:temps.length?Math.max(...temps):null,wind:winds.length?Math.max(...winds):null};
+  }
+
+  function lowTide(items){
+    const a=items.map(x=>({dt:x.obsrvnDt,h:Number(x.tdlvHgt)})).filter(x=>x.dt&&Number.isFinite(x.h)).sort((x,y)=>x.dt.localeCompare(y.dt));
+    if(!a.length)return null;const lows=[];for(let i=0;i<a.length;i++){const p=a[i-1]?.h??Infinity,n=a[i+1]?.h??Infinity;if(a[i].h<=p&&a[i].h<=n)lows.push(a[i]);}
+    const pool=lows.length?lows:a;const best=pool.reduce((x,y)=>x.h<=y.h?x:y);return {time:best.dt.slice(11,16),height:best.h};
+  }
+
+  async function loadWeather(meta){
+    const b=getKmaBase();const u=`${API_BASE}/kma?base_date=${b.base_date}&base_time=${b.base_time}&nx=${encodeURIComponent(meta.nx)}&ny=${encodeURIComponent(meta.ny)}`;
+    const p=await fetchJson(u);if(!apiOk(p))throw new Error(`기상청 API: ${apiMsg(p)}`);return groupWeather(apiItems(p));
+  }
+  async function loadTide(meta,d){
+    const u=`${API_BASE}/khoa?type=json&obsCode=${encodeURIComponent(meta.obsCode)}&reqDate=${ymd8(d)}&min=60&pageNo=1&numOfRows=300`;
+    const p=await fetchJson(u);if(!apiOk(p))throw new Error(`조위 API: ${apiMsg(p)}`);return lowTide(apiItems(p));
+  }
+
+  function blankDay(d){return {date:d,weather:null,low:null};}
+  function cell(v){return v??"확인필요";}
+  function renderRows(days){
+    body.innerHTML="";const today=new Date();today.setHours(0,0,0,0);
+    days.forEach(day=>{
+      const tr=document.createElement("tr");if(day.date<today)tr.classList.add("past");if(sameDay(day.date,today))tr.classList.add("today");
+      const w=day.weather;const temp=w&&w.tmin!=null&&w.tmax!=null?`${Math.round(w.tmin)}~${Math.round(w.tmax)}℃`:"확인필요";
+      const low=day.low?`${day.low.time} (${Math.round(day.low.height)}cm)`:"확인필요";const wind=w?.wind!=null?`${w.wind.toFixed(1)}m/s`:"확인필요";
+      tr.innerHTML=`<td><button class="datebtn" type="button">${label(day.date)}</button></td><td style="font-size:19px">${w?.icon??"—"}</td><td>${temp}</td><td>${low}</td><td><b>확인필요</b></td><td>확인필요</td><td><b>확인필요</b></td><td>${wind}</td><td>확인필요</td><td>확인필요</td><td>확인필요</td><td><span class="status normal">확인필요</span></td>`;
+      tr.querySelector("button").onclick=()=>show(day);body.appendChild(tr);
+    });detail.classList.remove("open");
+  }
+  function show(day){
+    const w=day.weather;const temp=w&&w.tmin!=null&&w.tmax!=null?`${Math.round(w.tmin)}~${Math.round(w.tmax)}℃`:"확인필요";const low=day.low?`${day.low.time} / ${Math.round(day.low.height)}cm`:"확인필요";
+    detail.innerHTML=`<h3>${label(day.date)} 상세</h3><div class="timecards"><div class="timecard exit"><small>🛟 철수 권고시간</small><strong>확인필요</strong><div class="source">확정된 안전판정 기준과 추가 공식 안전정보 연결 전에는 임의 시간을 계산하지 않습니다.</div></div><div class="timecard ref"><small>🎣 해루질 참고시간</small><strong>확인필요</strong><div class="source">확정된 판정 기준 적용 전에는 임의 시간을 계산하지 않습니다.</div></div></div><div class="metrics"><div class="metric"><span>간조</span><b>${low}</b></div><div class="metric"><span>날씨·기온</span><b>${w?.icon??"—"} ${temp}</b></div><div class="metric"><span>물때</span><b>확인필요</b></div><div class="metric"><span>풍속</span><b>${w?.wind!=null?`${w.wind.toFixed(1)}m/s`:"확인필요"}</b></div><div class="metric"><span>파고</span><b>확인필요</b></div></div><div class="warning"><b>상세 해석</b><br>현재 연결된 공식 데이터만 표시합니다. 파고·시정·특보·물때·안전시간·종합판정은 기존 확정 기준을 임의 변경하지 않고 다음 연결 단계까지 ‘확인필요’로 유지합니다.</div>`;
+    detail.classList.add("open");detail.scrollIntoView({behavior:"smooth",block:"nearest"});
+  }
+
+  function renderEmpty(which){renderRows(weekDates(which).map(blankDay));quick.forEach((q,i)=>q.textContent=i===1?"공식 데이터 조회 전":"공식 데이터 확인 필요");}
+  async function loadWeek(which){
+    const name=point.value;const meta=META[name];if(!meta){liveState.innerHTML="<b>포인트 매핑 확인 필요</b> · 확정된 매핑이 없는 포인트는 임의 연결하지 않습니다.";return;}
+    const ck=`${name}|${which}`;if(cache.has(ck)){const x=cache.get(ck);renderRows(x);updateQuick(x);return;}
+    lookupBtn.disabled=true;liveState.innerHTML="<b>공식 데이터 조회 중</b> · 국립해양조사원 조위와 기상청 단기예보를 확인하고 있습니다.";
+    const days=weekDates(which).map(blankDay);let weather=new Map(), weatherErr=null;
+    try{weather=await loadWeather(meta);}catch(e){weatherErr=e;console.warn(e);}
+    let tideOk=0;
+    for(const d of days){d.weather=weatherSummary(weather.get(ymd8(d.date)));try{d.low=await loadTide(meta,d.date);if(d.low)tideOk++;}catch(e){console.warn(label(d.date),e);}}
+    cache.set(ck,days);renderRows(days);updateQuick(days);const wOk=days.filter(d=>d.weather).length;
+    liveState.innerHTML=`<b>공식 데이터 조회 완료</b> · 조위 ${tideOk}/7일, 단기예보 ${wOk}/7일 확인. 미연결 항목은 임의값 없이 ‘확인필요’로 표시합니다.${weatherErr?" 기상청 단기예보는 현재 확인이 필요합니다.":""}`;
+    lookupBtn.disabled=false;
+  }
+  function updateQuick(days){
+    const tide=days.filter(d=>d.low).length, weather=days.filter(d=>d.weather).length;
+    if(quick[0])quick[0].textContent="종합판정 연결 전";
+    if(quick[1])quick[1].textContent=`조위 ${tide}일 · 날씨 ${weather}일 확인`;
+    if(quick[2])quick[2].textContent="특보·파고 확인 필요";
+  }
+
+  lookupBtn.addEventListener("click",()=>{activeWeek="this";tabs.forEach(x=>x.classList.toggle("active",x.dataset.week==="this"));loadWeek("this");});
+  tabs.forEach(b=>b.addEventListener("click",()=>{tabs.forEach(x=>x.classList.remove("active"));b.classList.add("active");activeWeek=b.dataset.week;loadWeek(activeWeek);}));
+  renderEmpty("this");
+})();
+</script>
+</body></html>
