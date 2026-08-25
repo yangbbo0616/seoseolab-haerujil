@@ -2358,15 +2358,15 @@ render(thisWeek);
 
   function extractLowTide(items){
     /*
-      KHOA 응답의 조위 필드명은 tdlvHght.
+      KHOA 응답의 조위 필드명은 tdlvHgt.
       관측/예측 응답에 따라 값이 비어 있을 수 있어 bscTdlvHght를 보조값으로 사용한다.
       첫/마지막 시각을 국소 최저점으로 간주하면 00:00이 잘못 선택될 수 있으므로
       양쪽 값이 모두 존재하는 내부 시각에서 저조점을 우선 탐색한다.
     */
     const rows=items
       .map(x=>{
-        const primary=Number(x.tdlvHght);
-        const fallback=Number(x.bscTdlvHght);
+        const primary=Number(x.tdlvHgt);
+        const fallback=Number(x.bscTdlvHgt);
         return {
           dt:x.obsrvnDt,
           h:Number.isFinite(primary) ? primary : fallback
