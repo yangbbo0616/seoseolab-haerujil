@@ -2247,7 +2247,18 @@ render(thisWeek);
   function apiItems(p){
     const x=apiBody(p)?.items?.item;
     if(!x) return [];
-    return Array.isArray(x) ? x : [x];
+
+    /*
+      Worker/KHOA 응답은 item이 [[{...},{...}]]처럼
+      한 단계 더 중첩되어 들어오는 경우가 있다.
+      조회기 내부에서는 항상 [{...},{...}] 형태로 평탄화해서 사용한다.
+    */
+    const flat = value => {
+      if(!Array.isArray(value)) return [value];
+      return value.flatMap(flat);
+    };
+
+    return flat(x).filter(v => v && typeof v === "object");
   }
   function apiOk(p){
     const code=String(apiHeader(p)?.resultCode ?? "").trim();
